@@ -1,0 +1,1696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-10-13 mar 17:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Análisis numérico</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Jhon, Samuel, Alejandro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<style>pre.src{background:#343131;color:white;} </style>
+<style> #content{max-width:1800px;}</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Análisis numérico</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2c71e91">1. Métodos de la primera entrega.</a>
+<ul>
+<li><a href="#orga96d8ab">1.1. Solución de ecuaciones de una variable</a>
+<ul>
+<li><a href="#org2b0594e">1.1.1. Bisección</a></li>
+<li><a href="#org7399a50">1.1.2. Búsquedas incrementales</a></li>
+<li><a href="#org7b79ab4">1.1.3. Regla falsa</a></li>
+<li><a href="#org6af0be6">1.1.4. Punto fijo</a></li>
+<li><a href="#orgd74cafe">1.1.5. Newton</a></li>
+<li><a href="#org79ce4f7">1.1.6. Secante</a></li>
+<li><a href="#orgc56b898">1.1.7. Raíces múltiples</a></li>
+</ul>
+</li>
+<li><a href="#orgd1ee2b0">1.2. Solución de sistemas de ecuaciones lineales</a>
+<ul>
+<li><a href="#org63101ee">1.2.1. Eliminación gaussiana</a></li>
+<li><a href="#org6a8be8c">1.2.2. Pivoteo parcial</a></li>
+<li><a href="#orgda8a5df">1.2.3. Pivoteo total</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org2c71e91" class="outline-2">
+<h2 id="org2c71e91"><span class="section-number-2">1</span> Métodos de la primera entrega.</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orga96d8ab" class="outline-3">
+<h3 id="orga96d8ab"><span class="section-number-3">1.1</span> Solución de ecuaciones de una variable</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-org2b0594e" class="outline-4">
+<h4 id="org2b0594e"><span class="section-number-4">1.1.1</span> Bisección</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li><p>
+Como ejecutar:
+</p>
+<pre class="example">
+biseccion(0,1,0.0000001,100,"log(sin(x)**2 + 1) - 1/2")
+</pre></li>
+
+<li><p>
+Algoritmo y resultados.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math 
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">biseccion</span>(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxInferior = f(xInferior)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxInferior</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xInferior})
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxSuperior = f(xSuperior)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxSuperior</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xSuperior})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxInferior == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xInferior) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fxSuperior == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xSuperior) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fxInferior * fxSuperior &lt; 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xMedio</span> = (xInferior + xSuperior) / 2
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxMedio = f(xMedio)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxMedio</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xMedio})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, 0]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> fxMedio != 0 <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxInferior * fxMedio &lt; 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xSuperior</span> = xMedio
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxSuperior</span> = fxMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xInferior</span> = xMedio
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxInferior</span> = fxMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">auxiliar</span> = xMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xMedio</span> = (xInferior + xSuperior) / 2
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxMedio = f(xMedio)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxMedio</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xMedio})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xMedio - auxiliar)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, error]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxMedio == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xMedio) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt; tolerancia:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xMedio) + <span style="color: #b9ca4a;">" es una aproximacion a una raiz con una tolerancia = "</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones) + <span style="color: #b9ca4a;">" iteraciones."</span>, <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"El intervalo es inadecuado."</span>, <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje] 
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>  <span style="color: #e78c45;">a</span> = biseccion(0,1,0.0000001,100,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>)
+<span style="background-color: #2a2a2a;"> </span>  <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">'\n'</span>)
+<span style="background-color: #2a2a2a;"> </span>  <span style="color: #c397d8;">print</span>(a)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+
+</pre>
+</div>
+<pre class="example">
+ #+RESULTS:
+: 
+: [[[1, 0, 1, 0.5, -0.2931087267313766, 0], [2, 0.5, 1, 0.75, -0.11839639385347844, 0.25], [3, 0.75, 1, 0.875, -0.036817690757380395, 0.125], [4, 0.875, 1, 0.9375, 0.0006339161592386899, 0.0625], [5, 0.875, 0.9375, 0.90625, -0.017772289226861138, 0.03125], [6, 0.90625, 0.9375, 0.921875, -0.008486582211768012, 0.015625], [7, 0.921875, 0.9375, 0.9296875, -0.0039053586270640928, 0.0078125], [8, 0.9296875, 0.9375, 0.93359375, -0.0016304381170096915, 0.00390625], [9, 0.93359375, 0.9375, 0.935546875, -0.0004969353153195244, 0.001953125], [10, 0.935546875, 0.9375, 0.9365234375, 6.882244496264622e-05, 0.0009765625], [11, 0.935546875, 0.9365234375, 0.93603515625, -0.00021397350516394464, 0.00048828125], [12, 0.93603515625, 0.9365234375, 0.936279296875, -7.255478812057126e-05, 0.000244140625], [13, 0.936279296875, 0.9365234375, 0.9364013671875, -1.8609849000705836e-06, 0.0001220703125], [14, 0.9364013671875, 0.9365234375, 0.93646240234375, 3.348202684883006e-05, 6.103515625e-05], [15, 0.9364013671875, 0.93646240234375, 0.936431884765625, 1.5810845160335596e-05, 3.0517578125e-05], [16, 0.9364013671875, 0.936431884765625, 0.9364166259765625, 6.975011174192858e-06, 1.52587890625e-05], [17, 0.9364013671875, 0.9364166259765625, 0.9364089965820312, 2.5570333977986692e-06, 7.62939453125e-06], [18, 0.9364013671875, 0.9364089965820312, 0.9364051818847656, 3.4802931392352576e-07, 3.814697265625e-06], [19, 0.9364013671875, 0.9364051818847656, 0.9364032745361328, -7.56476526753147e-07, 1.9073486328125e-06], [20, 0.9364032745361328, 0.9364051818847656, 0.9364042282104492, -2.042232898902263e-07, 9.5367431640625e-07], [21, 0.9364042282104492, 0.9364051818847656, 0.9364047050476074, 7.190309125881811e-08, 4.76837158203125e-07], [22, 0.9364042282104492, 0.9364047050476074, 0.9364044666290283, -6.616007947046754e-08, 2.384185791015625e-07], [23, 0.9364044666290283, 0.9364047050476074, 0.9364045858383179, 2.8715108069121698e-09, 1.1920928955078125e-07], [24, 0.9364044666290283, 0.9364045858383179, 0.9364045262336731, -3.164428308277678e-08, 5.960464477539063e-08]], ['0.9364045262336731 es una aproximacion a una raiz con una tolerancia = 1e-07', True]]
+:
+: ['0.9364045262336731 es una aproximacion a una raiz con una tolerancia = 1e-07', True]
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7399a50" class="outline-4">
+<h4 id="org7399a50"><span class="section-number-4">1.1.2</span> Búsquedas incrementales</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<ul class="org-ul">
+<li><p>
+Como ejecutar: 
+</p>
+<pre class="example">
+busquedasIncrementales(-3, 0.5, 100, "log(sin(x)**2 + 1) - 1/2")
+</pre></li>
+
+<li><p>
+Algoritmo y resultados.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">Algoritmo de busquedas incrementales</span>
+<span style="color: #c397d8;">import</span> math
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+<span style="color: #e78c45;">parser</span> = Parser()
+<span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">Datos de entrada:</span>
+<span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">f (funcion)</span>
+<span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">x (x inicial, x0)</span>
+<span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">deltax (variacion en x)</span>
+<span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">N (Numero maximo de iteraciones)</span>
+<span style="color: #e78c45;">raices</span> = []
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">busquedasIncrementales</span>(f, x, delta, maximoIteraciones):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+
+<span style="background-color: #2a2a2a;"> </span>   tabla.append([x, fx]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fx == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = x + delta
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxNuevo = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxNuevo</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([xNuevo, fxNuevo]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> fx * fxNuevo &gt; 0 <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = xNuevo
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = fxNuevo
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = x + delta
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxNuevo = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxNuevo</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([xNuevo, fxNuevo]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxNuevo == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xNuevo) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fx * fxNuevo &lt; 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Hay una raiz entre "</span> + <span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" y "</span> + <span style="color: #70c0b1;">str</span>(xNuevo), <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   raices.append([mensaje[0]])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   busquedasIncrementales(f, xNuevo, delta, (maximoIteraciones-contadorIteraciones))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones), <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">print(tabla)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">print(mensaje)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">return [tabla, mensaje] #</span>
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x0</span> = -3
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">deltax</span> = 0.5
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">N</span> = 100
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">f</span> = <span style="color: #b9ca4a;">'log(sin(x)**2+1) - 1/2'</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">print(busquedasIncrementales(f, x0, deltax, N))</span>
+<span style="background-color: #2a2a2a;"> </span>   busquedasIncrementales(f, x0, deltax, N)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> fila <span style="color: #c397d8;">in</span> raices:
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(fila)
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+
+</pre>
+</div>
+<pre class="example">
+         #+RESULTS:
+['Hay una raiz entre -2.5 y -2.0']
+['Hay una raiz entre -1.0 y -0.5']
+['Hay una raiz entre 0.5 y 1.0']
+['Hay una raiz entre 2.0 y 2.5']
+['Hay una raiz entre 4.0 y 4.5']
+['Hay una raiz entre 5.0 y 5.5']
+['Hay una raiz entre 7.0 y 7.5']
+['Hay una raiz entre 8.0 y 8.5']
+['Hay una raiz entre 10.0 y 10.5']
+['Hay una raiz entre 11.5 y 12.0']
+['Hay una raiz entre 13.5 y 14.0']
+['Hay una raiz entre 14.5 y 15.0']
+['Hay una raiz entre 16.5 y 17.0']
+['Hay una raiz entre 17.5 y 18.0']
+['Hay una raiz entre 19.5 y 20.0']
+['Hay una raiz entre 21.0 y 21.5']
+['Hay una raiz entre 22.5 y 23.0']
+['Hay una raiz entre 24.0 y 24.5']
+['Hay una raiz entre 26.0 y 26.5']
+['Hay una raiz entre 27.0 y 27.5']
+['Hay una raiz entre 29.0 y 29.5']
+['Hay una raiz entre 30.0 y 30.5']
+['Hay una raiz entre 32.0 y 32.5']
+['Hay una raiz entre 33.5 y 34.0']
+['Hay una raiz entre 35.0 y 35.5']
+['Hay una raiz entre 36.5 y 37.0']
+['Hay una raiz entre 38.5 y 39.0']
+['Hay una raiz entre 39.5 y 40.0']
+['Hay una raiz entre 41.5 y 42.0']
+['Hay una raiz entre 43.0 y 43.5']
+['Hay una raiz entre 44.5 y 45.0']
+['Hay una raiz entre 46.0 y 46.5']
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7b79ab4" class="outline-4">
+<h4 id="org7b79ab4"><span class="section-number-4">1.1.3</span> Regla falsa</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<ul class="org-ul">
+<li><p>
+Como ejecutar:
+</p>
+<pre class="example">
+reglaFalsa(0,1,0.0000001,100,"log(sin(x)**2 + 1) - 1/2")
+</pre></li>
+
+<li><p>
+Algoritmo y resultados.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">reglaFalsa</span>(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxInferior = f(xInferior)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxInferior</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xInferior})
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxSuperior = f(xSuperior)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxSuperior</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xSuperior})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxInferior == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xInferior) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fxSuperior == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xSuperior) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fxInferior * fxSuperior &lt; 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xMedio</span> = xInferior - ((fxInferior * (xSuperior - xInferior)) / (fxSuperior - fxInferior))
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxMedio = f(xMedio)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxMedio</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xMedio})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, 0]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> fxMedio != 0 <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxInferior * fxMedio &lt; 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xSuperior</span> = xMedio
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxSuperior</span> = fxMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xInferior</span> = xMedio
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxInferior</span> = fxMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">auxiliar</span> = xMedio
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xMedio</span> = xInferior - ((fxInferior * (xSuperior - xInferior)) / (fxSuperior - fxInferior))
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxMedio = f(xMedio)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxMedio</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xMedio})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xMedio - auxiliar)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, error]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxMedio == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xMedio) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt; tolerancia:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xMedio) + <span style="color: #b9ca4a;">" es una aproximacion a una raiz con una tolerancia = "</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones), <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"El intervalo es inadecuado."</span>, <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje] <span style="color: #969896; font-style: italic;">#</span>
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">a</span> = reglaFalsa(0,1,0.0000001,100,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">'\n'</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(a)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+       #+RESULTS:
+: 
+: [[[1, 0, 1, 0.9339403807182157, -0.0014290767036854723, 0], [2, 0.9339403807182157, 1, 0.9365060516656253, 5.8756008358140654e-05, 0.0025656709474095596], [3, 0.9339403807182157, 0.9365060516656253, 0.9364047307426412, 8.678254082017389e-08, 0.0001013209229840939], [4, 0.9339403807182157, 0.9364047307426412, 0.9364045811008692, 1.281542649778089e-10, 1.4964177197374084e-07], [5, 0.9339403807182157, 0.9364045811008692, 0.936404580879889, 1.8907098109366416e-13, 2.2098023411132317e-10]], ['0.936404580879889 es una aproximacion a una raiz con una tolerancia = 1e-07', True]]
+: ['0.936404580879889 es una aproximacion a una raiz con una tolerancia = 1e-07', True]
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6af0be6" class="outline-4">
+<h4 id="org6af0be6"><span class="section-number-4">1.1.4</span> Punto fijo</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<ul class="org-ul">
+<li>Como ejecutar:</li>
+</ul>
+<pre class="example">
+puntoFijo(-0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","log(sin(x)**2 + 1) - 1/2")
+</pre>
+
+<ul class="org-ul">
+<li><p>
+Algoritmo y resultados.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math 
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">puntoFijo</span>(x, tolerancia, maximoIteraciones, f, g):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 0
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x,fx, 0]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones <span style="color: #c397d8;">and</span> fx != 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">xNuevo = g(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = parser.parse(g).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xNuevo - x)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = xNuevo
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, error]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fx == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt;= tolerancia: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una aproximacion con tolerancia "</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones) + <span style="color: #b9ca4a;">" iteraciones."</span>, <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje]
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">a</span> = puntoFijo(-0.5,0.0000001,100,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">'\n'</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(a)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+       #+RESULTS:
+: 
+: [[[0, -0.5, -0.2931087267313766, 0], [1, -0.2931087267313766, -0.41982154360625734, 0.2068912732686234], [2, -0.41982154360625734, -0.3463045191776651, 0.12671281687488073], [3, -0.3463045191776651, -0.3909584565423095, 0.07351702442859226], [4, -0.3909584565423095, -0.3644050348941392, 0.0446539373646444], [5, -0.3644050348941392, -0.3804263031679563, 0.02655342164817026], [6, -0.3804263031679563, -0.37083679528020885, 0.016021268273817058], [7, -0.37083679528020885, -0.3766056453635812, 0.009589507887747428], [8, -0.3766056453635812, -0.373145417607189, 0.005768850083372357], [9, -0.373145417607189, -0.3752246411870562, 0.003460227756392209], [10, -0.3752246411870562, -0.37397658604830963, 0.002079223579867173], [11, -0.37397658604830963, -0.3747262157084321, 0.00124805513874654], [12, -0.3747262157084321, -0.37427613331045395, 0.0007496296601224861], [13, -0.37427613331045395, -0.3745464284580923, 0.00045008239797816874], [14, -0.3745464284580923, -0.3743841264348447, 0.00027029514763832196], [15, -0.3743841264348447, -0.3744815908319551, 0.0001623020232475736], [16, -0.3744815908319551, -0.37442306518389706, 9.746439711039168e-05], [17, -0.37442306518389706, -0.37445820986270584, 5.8525648058027624e-05], [18, -0.37445820986270584, -0.3744371058494556, 3.514467880877392e-05], [19, -0.3744371058494556, -0.37444977872741303, 2.110401325022826e-05], [20, -0.37444977872741303, -0.37444216876320036, 1.2672877957420337e-05], [21, -0.37444216876320036, -0.3744467385052047, 7.609964212673681e-06], [22, -0.3744467385052047, -0.37444399440652526, 4.5697420043566694e-06], [23, -0.37444399440652526, -0.37444564222126353, 2.744098679452467e-06], [24, -0.37444564222126353, -0.37444465271927385, 1.647814738270359e-06], [25, -0.37444465271927385, -0.3744452469090602, 9.895019896788426e-07], [26, -0.3744452469090602, -0.37444489010190096, 5.941897863737111e-07], [27, -0.37444489010190096, -0.37444510436235334, 3.568071592630062e-07], [28, -0.37444510436235334, -0.3744449757003151, 2.1426045238026603e-07], [29, -0.3744449757003151, -0.37444505296105535, 1.28662038245686e-07], [30, -0.37444505296105535, -0.3744450065664714, 7.726074024994034e-08]], ['-0.37444505296105535 es una aproximacion con tolerancia 1e-07', True]]
+:
+: ['-0.37444505296105535 es una aproximacion con tolerancia 1e-07', True]
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd74cafe" class="outline-4">
+<h4 id="orgd74cafe"><span class="section-number-4">1.1.5</span> Newton</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<ul class="org-ul">
+<li>Como ejecutar:</li>
+</ul>
+<pre class="example">
+newton(0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","(2*sin(x)*cos(x))/(sin(x)**2 + 1)")
+</pre>
+
+<ul class="org-ul">
+<li><p>
+Algoritmo y resultados.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math 
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">newton</span>(x, tolerancia, maximoIteraciones, f, df):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">derivada = fd(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">derivada</span> = parser.parse(df).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 0
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, derivada, 0]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones <span style="color: #c397d8;">and</span> fx != 0 <span style="color: #c397d8;">and</span> derivada != 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = x - (fx / derivada)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">derivada = fd(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">derivada</span> = parser.parse(df).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xNuevo - x)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = xNuevo
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, derivada, error]) <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fx == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt;= tolerancia: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una aproximacion con tolerancia "</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> derivada == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xNuevo) + <span style="color: #b9ca4a;">"es una posible raiz multiple"</span>, <span style="color: #70c0b1;">True</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones) + <span style="color: #b9ca4a;">" iteraciones."</span>, <span style="color: #70c0b1;">False</span>] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">a</span> = newton(0.5,0.0000001,100,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>,<span style="color: #b9ca4a;">"(2*sin(x)*cos(x))/(sin(x)**2 + 1)"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">'\n'</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(a)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+#+RESULTS:
+:
+: [[[0, 0.5, -0.2931087267313766, 0.6842068330717285, 0], [1, 0.9283919899125719, -0.004662157097372055, 0.5846147284064962, 0.4283919899125719], [2, 0.9363667412673313, -2.1912619882713535e-05, 0.5791052537949999, 0.007974751354759446], [3, 0.9364045800189902, -4.98339092214195e-10, 0.5790789133390185, 3.783875165885853e-05], [4, 0.9364045808795621, -1.1102230246251565e-16, 0.5790789127399327, 8.605719470367035e-10]], ['0.9364045808795621 es una aproximacion con tolerancia 1e-07', True]]
+: 
+: ['0.9364045808795621 es una aproximacion con tolerancia 1e-07', True]       
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org79ce4f7" class="outline-4">
+<h4 id="org79ce4f7"><span class="section-number-4">1.1.6</span> Secante</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<ul class="org-ul">
+<li><p>
+Como ejecutar: 
+</p>
+<pre class="example">
+secante(0.5,1,0.0000001,100,"log(sin(x)**2 + 1) - 1/2")
+</pre></li>
+
+<li><p>
+Algoritmo y resultados
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math 
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">secante</span>(x, xNuevo, tolerancia, maximoIteraciones, f):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = [] <span style="color: #969896; font-style: italic;">#</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fx == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxNuevo = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxNuevo</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 0
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">denominador</span> = fxNuevo - fx
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, 0])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, 0])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> fxNuevo != 0 <span style="color: #c397d8;">and</span> denominador != 0 <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xAuxiliar</span> = xNuevo - fxNuevo * (xNuevo - x) / denominador
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xAuxiliar - xNuevo)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = xNuevo
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = fxNuevo
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = xAuxiliar
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fxNuevo = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fxNuevo</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">denominador</span> = fxNuevo - fx
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, error])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fxNuevo == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xNuevo) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt; tolerancia: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(xNuevo) + <span style="color: #b9ca4a;">" es una aproximacion a una raiz con tolerancia="</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> denominador == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Hay una posible raiz multiple"</span>, <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones) + <span style="color: #b9ca4a;">" iteraciones."</span>, <span style="color: #70c0b1;">False</span>]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">a</span> = secante(0.5,1,0.0000001,100,<span style="color: #b9ca4a;">"log(sin(x)**2 + 1) - 1/2"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">'\n'</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(a)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+       #+RESULTS:
+: 
+: [[[0, 0.5, -0.2931087267313766, 0], [1, 1, 0.03536607938024017, 0], [2, 0.946166222306525, 0.005619392737863826, 0.05383377769347497], [3, 0.9359965807911726, -0.00023632217470054284, 0.010169641515352379], [4, 0.9364070023767038, 1.4022358909571153e-06, 0.00041042158553117325], [5, 0.9364045814731196, 3.4371649970665885e-10, 2.420903584265943e-06], [6, 0.9364045808795615, -4.996003610813204e-16, 5.935580915661376e-10]], ['0.9364045808795615 es una aproximacion a una raiz con tolerancia=1e-07', True]]
+:
+: ['0.9364045808795615 es una aproximacion a una raiz con tolerancia=1e-07', True]
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc56b898" class="outline-4">
+<h4 id="orgc56b898"><span class="section-number-4">1.1.7</span> Raíces múltiples</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<ul class="org-ul">
+<li>Como ejecutar:</li>
+</ul>
+<pre class="example">
+raicesMultiples(1,0.0000001,100,"exp(x) - x - 1","exp(x) - x","exp(x)")
+</pre>
+
+<ul class="org-ul">
+<li>Algoritmo y resultado</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math
+<span style="color: #c397d8;">from</span> py_expression_eval <span style="color: #c397d8;">import</span> Parser
+
+<span style="color: #e78c45;">parser</span> = Parser()
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">raicesMultiples</span>(x, tolerancia, maximoIteraciones, f, df, ddf):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">tabla</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fdx = fd(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fdx</span> = parser.parse(df).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fddx = fdd(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fddx</span> = parser.parse(ddf).evaluate({<span style="color: #b9ca4a;">"x"</span>: x})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> = 0
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = tolerancia + 1
+
+<span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, fdx, fddx, 0])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">while</span> error &gt; tolerancia <span style="color: #c397d8;">and</span> contadorIteraciones &lt; maximoIteraciones <span style="color: #c397d8;">and</span> fx != 0 <span style="color: #c397d8;">and</span> fdx != 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">xNuevo</span> = x - ((fx * fdx) / (math.<span style="color: #70c0b1;">pow</span>(fdx, 2) - fx * fddx)) <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">Habia un error, estaba math.pow(fddx, 2) </span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fx = f(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fx</span> = parser.parse(f).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fdx = fd(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fdx</span> = parser.parse(df).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">fddx = fdd(xNuevo)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fddx</span> = parser.parse(ddf).evaluate({<span style="color: #b9ca4a;">"x"</span>: xNuevo})
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">error</span> = <span style="color: #70c0b1;">abs</span>(xNuevo - x)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = xNuevo
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">contadorIteraciones</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   tabla.append([contadorIteraciones, x, fx, fdx, fddx, error])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> fx == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una raiz."</span>, <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> error &lt;= tolerancia: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #70c0b1;">str</span>(x) + <span style="color: #b9ca4a;">" es una aproximacion a una raiz con tolerancia="</span> + <span style="color: #70c0b1;">str</span>(tolerancia), <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> fdx == 0: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Hay una posible raiz multiple"</span>, <span style="color: #70c0b1;">True</span>]     
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mensaje</span> = [<span style="color: #b9ca4a;">"Fracaso en "</span> + <span style="color: #70c0b1;">str</span>(maximoIteraciones) + <span style="color: #b9ca4a;">" iteraciones."</span>, <span style="color: #70c0b1;">False</span>]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [tabla, mensaje]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">hx</span> = <span style="color: #b9ca4a;">"exp(x)-x-1"</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">dhx</span> = <span style="color: #b9ca4a;">"exp(x)-1"</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">ddhx</span> = <span style="color: #b9ca4a;">"exp(x)"</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">TOL</span> = 0.0000001
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">N</span> = 100
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x0</span> = 1
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">resultado</span> = raicesMultiples(1, TOL, N, hx, dhx, ddhx)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(resultado)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+ #+RESULTS:
+: [[[0, 1, 0.7182818284590451, 1.718281828459045, 2.718281828459045, 0], [1, -0.23421061355351425, 0.025405775475345838, -0.20880483807816852, 0.7911951619218315, 1.2342106135535142], [2, -0.00845827991076109, 3.567060801401567e-05, -0.008422609302746964, 0.991577390697253, 0.22575233364275316], [3, -1.1890183808588653e-05, 7.068789997788372e-11, -1.1890113120638368e-05, 0.9999881098868794, 0.008446389726952502], [4, -4.218590698935789e-11, 0.0, -4.218592142279931e-11, 0.9999999999578141, 1.1890141622681664e-05]], ['-4.218590698935789e-11 es una raiz.', True]]
+:
+: ['-4.218590698935789e-11 es una raiz.', True]
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd1ee2b0" class="outline-3">
+<h3 id="orgd1ee2b0"><span class="section-number-3">1.2</span> Solución de sistemas de ecuaciones lineales</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Definir A, b y la matriz aumentada Ab</li>
+<li><p>
+True imprime las etapas.
+</p>
+<pre class="example">
+ A =[
+   [2, -1, 0, 3],
+   [1, 0.5, 3, 8],
+   [0, 13, -2, 11],
+   [14, 5, -1, 3]
+   ]
+
+b = [1, 1, 1, 1]
+
+Ab = matrizAumentada(A, b)
+</pre></li>
+</ul>
+</div>
+
+<div id="outline-container-org63101ee" class="outline-4">
+<h4 id="org63101ee"><span class="section-number-4">1.2.1</span> Eliminación gaussiana</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ul class="org-ul">
+<li><p>
+Como ejecutar:
+</p>
+<pre class="example">
+gaussianaSimple(Ab, len(Ab), True)
+</pre></li>
+
+<li><p>
+Algoritmo y resultado
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">valorMatriz</span>(Matriz):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">nuevaMatriz</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fila</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz[0])):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   fila.append(Matriz[i][j])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   nuevaMatriz.append(fila)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> nuevaMatriz
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">matrizAumentada</span>(A, b):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">matrizAumentada</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">copiaDeA</span> = valorMatriz(A)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(copiaDeA)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   copiaDeA[i].append(b[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   matrizAumentada.append(copiaDeA[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> matrizAumentada
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">imprimirMatriz</span>(Matriz): 
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> fila <span style="color: #c397d8;">in</span> Matriz: <span style="color: #c397d8;">print</span>(fila)
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">sustitucionRegresiva</span>(Ab):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> pivotIndex <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab) - 1), -1, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> = <span style="color: #e78c45;">i</span> =  0
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> column <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab[0]) - 2), pivotIndex, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> +=  Ab[pivotIndex][column] * x[i]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">i</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   x.append( ( Ab[pivotIndex][<span style="color: #70c0b1;">len</span>(Ab[0]) - 1] - summation ) / Ab[pivotIndex][pivotIndex] )
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> x[::-1]
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">gaussianaSimple</span>(AbParam, n, printEtapas):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">AbParam es la matriz aumentada Ab</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">n = len(AbParam)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">etapas</span> = [] 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = valorMatriz(AbParam)
+
+<span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Eliminaci&#243;n</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> k <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(n - 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicadoresDeEtapa</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k + 1, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicator</span> = Ab[i][k] / Ab[k][k]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k, n + 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   Ab[i][j] = Ab[i][j] - ( multiplicator * Ab[k][j] )
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> printEtapas == <span style="color: #70c0b1;">True</span>:
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span> (<span style="color: #70c0b1;">len</span>(etapas)):
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Etapa"</span>,i,<span style="color: #b9ca4a;">":"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(etapas[i])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">" "</span>)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">print("Etapa ", len(etapas), ": ")</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">imprimirMatriz(etapas[-1]) #etapas[-1] es lo mismo que decir etapas en la ultima posicion   </span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">Sustitucion regresiva:</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = sustitucionRegresiva(Ab)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">imprimirMatriz(x)</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span>[x]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">A</span> = [
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [2, -1, 0, 3],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [1, 0.5, 3, 8],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [0, 13, -2, 11],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [14, 5, -2, 3]
+<span style="background-color: #2a2a2a;"> </span>   ]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">b</span> = [1, 1, 1, 1]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = matrizAumentada(A, b)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz A: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(A)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Vector b: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(b)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz Ab: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(Ab)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">imprimirEtapas</span> = <span style="color: #70c0b1;">True</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Despues de aplicar sustitucion Gaussiana simple: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">resultado</span> = gaussianaSimple(Ab, <span style="color: #70c0b1;">len</span>(Ab), imprimirEtapas)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"resultados x: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(resultado)
+
+
+
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+      #+RESULTS:
+#+begin_example
+Matriz A: 
+[2, -1, 0, 3]
+[1, 0.5, 3, 8]
+[0, 13, -2, 11]
+[14, 5, -2, 3]
+Vector b: 
+1
+1
+1
+1
+Matriz Ab: 
+[2, -1, 0, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[14, 5, -2, 3, 1]
+Despues de aplicar sustitucion Gaussiana simple: 
+Etapa 0 :
+[2, -1, 0, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[14, 5, -2, 3, 1]
+
+Etapa 1 :
+[2, -1, 0, 3, 1]
+[0.0, 1.0, 3.0, 6.5, 0.5]
+[0.0, 13.0, -2.0, 11.0, 1.0]
+[0.0, 12.0, -2.0, -18.0, -6.0]
+
+Etapa 2 :
+[2, -1, 0, 3, 1]
+[0.0, 1.0, 3.0, 6.5, 0.5]
+[0.0, 0.0, -41.0, -73.5, -5.5]
+[0.0, 0.0, -38.0, -96.0, -12.0]
+
+Etapa 3 :
+[2, -1, 0, 3, 1]
+[0.0, 1.0, 3.0, 6.5, 0.5]
+[0.0, 0.0, -41.0, -73.5, -5.5]
+[0.0, 0.0, 0.0, -27.878048780487802, -6.902439024390244]
+
+resultados x: 
+[0.03849518810148722, -0.18022747156605434, -0.30971128608923887, 0.24759405074365706]
+#+end_example
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6a8be8c" class="outline-4">
+<h4 id="org6a8be8c"><span class="section-number-4">1.2.2</span> Pivoteo parcial</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li><p>
+Como ejecutar:
+</p>
+<pre class="example">
+gaussianaPivoteoParcial(Ab, len(Ab), True)
+</pre></li>
+
+<li><p>
+Algoritmo y resultado
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">valorMatriz</span>(Matriz):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">nuevaMatriz</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fila</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz[0])):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   fila.append(Matriz[i][j])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   nuevaMatriz.append(fila)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> nuevaMatriz
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">matrizAumentada</span>(A, b):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">matrizAumentada</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">copiaDeA</span> = valorMatriz(A)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(copiaDeA)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   copiaDeA[i].append(b[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   matrizAumentada.append(copiaDeA[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> matrizAumentada
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">imprimirMatriz</span>(Matriz): 
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> fila <span style="color: #c397d8;">in</span> Matriz: <span style="color: #c397d8;">print</span>(fila)
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">intercambiarFilas</span>(M, indexA, indexB):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">aux</span> = M[indexA]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">M</span>[indexA] = M[indexB]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">M</span>[indexB] = aux
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">pivoteoParcial</span>(Ab, k, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayor</span> = math.fabs(Ab[k][k])
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = k
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k + 1, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> math.fabs(Ab[i][k]) &gt; mayor:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayor</span> = Ab[i][k]
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = i
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> mayor == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"El sistema no tiene soluci&#243;n &#250;nica."</span>)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">elif</span> filaMayor != k:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   intercambiarFilas(Ab, k, filaMayor)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> filaMayor
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">sustitucionRegresiva</span>(Ab):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> pivotIndex <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab) - 1), -1, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> = <span style="color: #e78c45;">i</span> =  0
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> column <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab[0]) - 2), pivotIndex, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> +=  Ab[pivotIndex][column] * x[i]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">i</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   x.append( ( Ab[pivotIndex][<span style="color: #70c0b1;">len</span>(Ab[0]) - 1] - summation ) / Ab[pivotIndex][pivotIndex] )
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> x[::-1]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">gaussianaPivoteoParcial</span>(AbParam, n, imprimirEtapas):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">etapas</span> = [] 
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">etapasPrevias</span> = []
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayorList</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = valorMatriz(AbParam)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Eliminaci&#243;n</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> k <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(n - 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   etapasPrevias.append(valorMatriz(Ab))
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = pivoteoParcial(Ab, k, n)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   filaMayorList.append(filaMayor)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicadoresDeEtapa</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k + 1, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicator</span> = Ab[i][k] / Ab[k][k]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k, n + 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   Ab[i][j] = Ab[i][j] - ( multiplicator * Ab[k][j] )
+
+
+<span style="background-color: #2a2a2a;"> </span>   etapasPrevias.append(valorMatriz(Ab))
+<span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> imprimirEtapas == <span style="color: #70c0b1;">True</span>:
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span> (<span style="color: #70c0b1;">len</span>(etapas)):
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Etapa"</span>,i,<span style="color: #b9ca4a;">":"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(etapas[i])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">" "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">Sustitucion regresiva</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = sustitucionRegresiva(Ab)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [etapas, x, filaMayorList, etapasPrevias]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">A</span> = [
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [2, -1, 0, 3],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [1, 0.5, 3, 8],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [0, 13, -2, 11],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [14, 5, -2, 3]
+<span style="background-color: #2a2a2a;"> </span>   ]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">b</span> = [1, 1, 1, 1]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = matrizAumentada(A, b)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz A: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(A)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Vector b: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(b)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz Ab: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(Ab)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">imprimirEtapas</span> = <span style="color: #70c0b1;">True</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Despues de aplicar sustitucion Gaussiana con pivoteo parcial: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">resultado</span> = gaussianaPivoteoParcial(Ab, <span style="color: #70c0b1;">len</span>(Ab), imprimirEtapas)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = resultado[1]
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(x)
+
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+      #+RESULTS:
+#+begin_example
+Matriz A: 
+[2, -1, 0, 3]
+[1, 0.5, 3, 8]
+[0, 13, -2, 11]
+[14, 5, -2, 3]
+Vector b: 
+1
+1
+1
+1
+Matriz Ab: 
+[2, -1, 0, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[14, 5, -2, 3, 1]
+Despues de aplicar sustitucion Gaussiana con pivoteo parcial: 
+Etapa 0 :
+[14, 5, -2, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[2, -1, 0, 3, 1]
+
+Etapa 1 :
+[14, 5, -2, 3, 1]
+[0.0, 13.0, -2.0, 11.0, 1.0]
+[0.0, 0.1428571428571429, 3.142857142857143, 7.785714285714286, 0.9285714285714286]
+[0.0, -1.7142857142857142, 0.2857142857142857, 2.5714285714285716, 0.8571428571428572]
+
+Etapa 2 :
+[14, 5, -2, 3, 1]
+[0.0, 13.0, -2.0, 11.0, 1.0]
+[0.0, 0.0, 3.1648351648351647, 7.664835164835164, 0.9175824175824177]
+[0.0, 2.220446049250313e-16, 0.021978021978021955, 4.021978021978022, 0.989010989010989]
+
+Etapa 3 :
+[14, 5, -2, 3, 1]
+[0.0, 13.0, -2.0, 11.0, 1.0]
+[0.0, 0.0, 3.1648351648351647, 7.664835164835164, 0.9175824175824177]
+[0.0, 2.220446049250313e-16, 0.0, 3.96875, 0.982638888888889]
+
+0.0384951881014873
+-0.18022747156605426
+-0.30971128608923887
+0.24759405074365706
+#+end_example
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgda8a5df" class="outline-4">
+<h4 id="orgda8a5df"><span class="section-number-4">1.2.3</span> Pivoteo total</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li><p>
+Como ejecutar:
+</p>
+<pre class="example">
+gaussianaPivoteoTotal(Ab, len(Ab), True)
+</pre></li>
+
+<li><p>
+Algoritmo y resultado
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #c397d8;">import</span> math
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">valorMatriz</span>(Matriz):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">nuevaMatriz</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">fila</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(Matriz[0])):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   fila.append(Matriz[i][j])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   nuevaMatriz.append(fila)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> nuevaMatriz
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">matrizAumentada</span>(A, b):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">matrizAumentada</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">copiaDeA</span> = valorMatriz(A)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(copiaDeA)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   copiaDeA[i].append(b[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   matrizAumentada.append(copiaDeA[i])
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> matrizAumentada
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">imprimirMatriz</span>(Matriz): 
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> fila <span style="color: #c397d8;">in</span> Matriz: <span style="color: #c397d8;">print</span>(fila)
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">sustitucionRegresiva</span>(Ab):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> pivotIndex <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab) - 1), -1, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> = <span style="color: #e78c45;">i</span> =  0
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> column <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>((<span style="color: #70c0b1;">len</span>(Ab[0]) - 2), pivotIndex, -1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">summation</span> +=  Ab[pivotIndex][column] * x[i]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">i</span> += 1
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   x.append( ( Ab[pivotIndex][<span style="color: #70c0b1;">len</span>(Ab[0]) - 1] - summation ) / Ab[pivotIndex][pivotIndex] )
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> x[::-1]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">intercambiarFilas</span>(M, indexA, indexB):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">aux</span> = M[indexA]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">M</span>[indexA] = M[indexB]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">M</span>[indexB] = aux
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">intercambiarColumnas</span>(M, indexA, indexB, marcas):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">auxMarcas</span> = marcas[indexA]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">marcas</span>[indexA] = marcas[indexB]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">marcas</span>[indexB] = auxMarcas
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(<span style="color: #70c0b1;">len</span>(M)):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">aux</span> = M[i][indexA]
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   M[i][indexA] = M[i][indexB]
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   M[i][indexB] = aux
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">pivoteoTotal</span>(Ab, k, n, marcas):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayor</span> = 0
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = k
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">columnaMayor</span> = k
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k, n):
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> math.fabs(Ab[i][j]) &gt; mayor:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayor</span> = math.fabs(Ab[i][j])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = i
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">columnaMayor</span> = j
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> mayor == 0:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"El sistema no tiene soluci&#243;n &#250;nica."</span>)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">else</span>:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> filaMayor != k: 
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   intercambiarFilas(Ab, k, filaMayor)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> columnaMayor != k:
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   intercambiarColumnas(Ab, k, columnaMayor, marcas)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [filaMayor, columnaMayor]
+
+
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">gaussianaPivoteoTotal</span>(AbParam, n, imprimirEtapas):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">etapas</span> = [] 
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">etapasPrevias</span> = []
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayorList</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">marcas</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(n): marcas.append(i)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = valorMatriz(AbParam)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Eliminaci&#243;n</span>
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> k <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(n - 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   etapasPrevias.append(valorMatriz(Ab))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">mayorIndex</span> = pivoteoTotal(Ab, k, n, marcas)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">filaMayor</span> = mayorIndex[0]
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">columnaMayor</span> = mayorIndex[1]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   mayorList.append([filaMayor, columnaMayor])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicadoresDeEtapa</span> = []
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k + 1, n):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">multiplicator</span> = Ab[i][k] / Ab[k][k]
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> j <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span>(k, n + 1):
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   Ab[i][j] = Ab[i][j] - ( multiplicator * Ab[k][j] )
+
+
+<span style="background-color: #2a2a2a;"> </span>   etapasPrevias.append(valorMatriz(Ab))
+<span style="background-color: #2a2a2a;"> </span>   etapas.append(valorMatriz(Ab))
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">if</span> imprimirEtapas == <span style="color: #70c0b1;">True</span>:
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">for</span> i <span style="color: #c397d8;">in</span> <span style="color: #70c0b1;">range</span> (<span style="color: #70c0b1;">len</span>(etapas)):
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Etapa"</span>,i,<span style="color: #b9ca4a;">":"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(etapas[i])
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">" "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Sustituci&#243;n regresiva</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = sustitucionRegresiva(Ab)
+
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">return</span> [etapas, x, mayorList, etapasPrevias, marcas]
+
+<span style="color: #c397d8;">def</span> <span style="color: #7aa6da;">main</span>():
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">A</span> = [
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [2, -1, 0, 3],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [1, 0.5, 3, 8],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [0, 13, -2, 11],
+<span style="background-color: #2a2a2a;"> </span>   <span style="background-color: #2a2a2a;"> </span>   [14, 5, -2, 3]
+<span style="background-color: #2a2a2a;"> </span>   ]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">b</span> = [1, 1, 1, 1]
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">Ab</span> = matrizAumentada(A, b)
+
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz A: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(A)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Vector b: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(b)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Matriz Ab: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(Ab)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">imprimirEtapas</span> = <span style="color: #70c0b1;">True</span>
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"*******************************************************************************"</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Despues de aplicar sustitucion Gaussiana con pivoteo total: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">resultado</span> = gaussianaPivoteoTotal(Ab, <span style="color: #70c0b1;">len</span>(Ab), imprimirEtapas)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #c397d8;">print</span>(<span style="color: #b9ca4a;">"Resultados x: "</span>)
+<span style="background-color: #2a2a2a;"> </span>   <span style="color: #e78c45;">x</span> = resultado[1]
+<span style="background-color: #2a2a2a;"> </span>   imprimirMatriz(x)
+
+<span style="color: #c397d8;">if</span> <span style="color: #70c0b1;">__name__</span> == <span style="color: #b9ca4a;">"__main__"</span>:
+<span style="background-color: #2a2a2a;"> </span>   main()
+</pre>
+</div>
+<pre class="example">
+      #+RESULTS:
+#+begin_example
+Matriz A: 
+[2, -1, 0, 3]
+[1, 0.5, 3, 8]
+[0, 13, -2, 11]
+[14, 5, -2, 3]
+Vector b: 
+1
+1
+1
+1
+Matriz Ab: 
+[2, -1, 0, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[14, 5, -2, 3, 1]
+*******************************************************************************
+Despues de aplicar sustitucion Gaussiana con pivoteo total: 
+Etapa 0 :
+[14, 5, -2, 3, 1]
+[1, 0.5, 3, 8, 1]
+[0, 13, -2, 11, 1]
+[2, -1, 0, 3, 1]
+
+Etapa 1 :
+[14, 5, -2, 3, 1]
+[0.0, 13.0, -2.0, 11.0, 1.0]
+[0.0, 0.1428571428571429, 3.142857142857143, 7.785714285714286, 0.9285714285714286]
+[0.0, -1.7142857142857142, 0.2857142857142857, 2.5714285714285716, 0.8571428571428572]
+
+Etapa 2 :
+[14, 5, 3, -2, 1]
+[0.0, 13.0, 11.0, -2.0, 1.0]
+[0.0, 0.0, 7.664835164835164, 3.1648351648351647, 0.9175824175824177]
+[0.0, 2.220446049250313e-16, 4.021978021978022, 0.021978021978021955, 0.989010989010989]
+
+Etapa 3 :
+[14, 5, 3, -2, 1]
+[0.0, 13.0, 11.0, -2.0, 1.0]
+[0.0, 0.0, 7.664835164835164, 3.1648351648351647, 0.9175824175824177]
+[0.0, 2.220446049250313e-16, 0.0, -1.638709677419355, 0.5075268817204301]
+
+Resultados x: 
+0.038495188101487325
+-0.18022747156605423
+0.24759405074365703
+-0.3097112860892388
+#+end_example
+</pre></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Jhon, Samuel, Alejandro</p>
+<p class="date">Created: 2020-10-13 mar 17:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
