@@ -47,9 +47,13 @@ def puntoFijo(x, tolerancia, maximoIteraciones, f, g):
 
 
 def main():
-    a = puntoFijo(-0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","log(sin(x)**2 + 1) - 1/2")
+    #a = puntoFijo(-0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","log(sin(x)**2 + 1) - 1/2")
+    a = puntoFijo(1, 0.00001, 100, "exp(x-10.5)+sin(x)+(x**3)-2*x", "exp(x-10.5)+(sin(x))+(x**3)-x")
     print('\n')
-    print(a)
+    #print(a)
+    for row in a[0]:
+        print(row)
+    print(a[1])
 
 if __name__ == "__main__":
     main()

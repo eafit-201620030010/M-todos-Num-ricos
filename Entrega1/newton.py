@@ -52,9 +52,13 @@ def newton(x, tolerancia, maximoIteraciones, f, df):
     return [tabla, mensaje]
 
 def main():
-    a = newton(0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","(2*sin(x)*cos(x))/(sin(x)**2 + 1)")
+    #a = newton(0.5,0.0000001,100,"log(sin(x)**2 + 1) - 1/2","(2*sin(x)*cos(x))/(sin(x)**2 + 1)")
+    a = newton(0.55, 0.00001, 100, "(0.44*(x**2))-(0.44*x)+0.11", "0.88*x-0.44")
     print('\n')
-    print(a)
+    #print(a)
+    for row in a[0]:
+        print(row)
+    print(a[1])
 
 if __name__ == "__main__":
     main()

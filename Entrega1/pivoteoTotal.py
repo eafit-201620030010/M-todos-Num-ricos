@@ -155,13 +155,19 @@ def gaussianaPivoteoTotal(AbParam, n, imprimirEtapas):
     return [etapas, x, mayorList, etapasPrevias, marcas]
 
 def main():
-    A = [
+    """A = [
         [2, -1, 0, 3],
         [1, 0.5, 3, 8],
         [0, 13, -2, 11],
         [14, 5, -2, 3]
     ]
-    b = [1, 1, 1, 1]
+    b = [1, 1, 1, 1]"""
+    A = [
+        [4,2,1],
+        [0.25,0.5,1],
+        [1,1,0]
+    ]
+    b = [1,0,0]
     Ab = matrizAumentada(A, b)
     
     print("Matriz A: ")
