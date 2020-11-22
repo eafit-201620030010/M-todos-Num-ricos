@@ -1,0 +1,44 @@
+<html>
+	<head>
+
+                <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+
+	</head>
+
+        <body>
+		
+		{% block content %}
+		<form method="POST" action="/establecerFuncion">
+		
+			<b> Funciones establecidas: </b> <br><br>
+
+			<b> f(x): </b> <label> {{f}} </label> <br><br>
+			<b> g(x): </b> <label> {{g}} </label> <br><br>
+			<b> f'(x): </b> <label> {{df}} </label> <br><br>
+			<b> f''(x): </b> <label> {{ddf}} </label> <br><br>
+
+			<hr>
+
+			<b> Establecer funciones: </b> <br><br>
+			
+			<label>f(x): </label>
+			<input type="text" name="f"> <br><br>
+			
+			<label>g(x): </label>
+			<input type="text" name="g"> <br><br>
+			
+			<label>f'(x): </label>
+			<input type="text" name="df"> <br><br>
+			
+			<label>f''(x): </label>
+			<input type="text" name="ddf"> <br><br>
+
+			<input type="submit" value="Establecer funciones">
+			<a href="/{{session["metodo"]}}">Volver al método</a>
+
+		</form>
+		{% endblock %}
+
+	</body>
+</html>
+

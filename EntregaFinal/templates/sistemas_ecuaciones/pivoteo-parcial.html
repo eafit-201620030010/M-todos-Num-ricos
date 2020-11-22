@@ -1,0 +1,215 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+<body>
+
+	<br><center>
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<a href="/" class="btn btn-primary">Inicio</a>
+		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
+	</center><br><br>
+		
+	<div class="container">
+
+			<form method="POST" action="/pivoteoParcial">
+			
+			<div class="card">
+  			<div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Pivoteo parcial.</h3>
+				</div>
+				<div class="col">
+					<button class="btn btn-link">¿Cómo funciona el método?</button>
+				</div>
+
+			</div>
+
+			<hr>
+
+			<div class="row">
+				
+				<div class="col">
+					
+					<label> Matriz de coeficientes: </label><br>
+					<textarea rows="4" cols="50" name="txtA"></textarea>
+
+				</div>
+				
+				<div class="col">
+				
+					<label> Vector de términos independientes: </label><br>
+					<input type="text" name="txtB">
+			
+					<br><br>
+					
+					<input type="checkbox" name="checkEtapas" id="checkEtapas">
+    					<label for="checkEtapas">Etapas del proceso</label>
+					
+					<br><br>	
+			
+					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
+					
+				</div>
+
+			</div>
+
+			</div>
+			</div>
+
+			</form>
+
+		{% block content %}
+		{% if n %}
+			
+			<div class="card">
+  			<div class="card-body">
+			
+			<!-- IMPORTANTE -->
+			{% if proceso == True %}	
+			<h2>Etapas del proceso:</h2> <br>
+
+			{% for k in range(0, numEtapas-1) %}
+			<div class="row">
+		
+				<div class="col">
+
+					<h3>Etapa {{k+1}}:</h3>
+					
+					{% if filaMayorList[k]!=k %}
+						<label>Se produce un intercambio de filas: [F{{ filaMayorList[k] }} <-> F{{ k }}]</label>
+					{% else %}
+						<label>No se produce intercambio de filas.</label>
+					{% endif %}
+
+					<table class="table table-bordered table-sm">
+					{% for i in range(0, n) %}
+						<tr>
+						{% for j in range(0, n + 1) %}
+							
+							{% if i==filaMayorList[k] and j==k %}
+								<td bgcolor="#FFFC33"> {{ etapasPrevias[k][i][j] }} </td>
+							{% else %}	
+								<td> {{ etapasPrevias[k][i][j] }} </td>
+							{% endif %}
+
+						{% endfor %}
+						</tr>
+					{% endfor %}
+					</table>
+				</div>
+			</div>
+
+			<div class="row">
+	
+				<div class="col">
+
+					<label>Esta es la matriz después del intercambio, los elementos seleccionados se convertirán en 0:</label>
+
+					<table class="table table-bordered table-sm">
+					{% for i in range(0, n) %}
+						<tr>
+						{% for j in range(0, n + 1) %}
+					
+							{% if j == k and i > k %}
+								<td bgcolor="#33FF5E"> {{ etapas[k][i][j] }} </td>
+							{% else %}
+								<td> {{ etapas[k][i][j] }} </td>
+							{% endif %}
+
+						{% endfor %}
+						</tr>
+					{% endfor %}
+					</table>
+
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col">
+
+					{% if k != numEtapas-2 %}
+						<label>Matriz resultante de la etapa:</label>
+					{% else %}
+						<label><b>Matriz resultante de la etapa y del proceso:</b></label>
+					{% endif %}
+
+					<table class="table table-bordered table-sm">
+					{% for i in range(0, n) %}
+						<tr>
+						{% for j in range(0, n + 1) %}
+					
+							<td> {{ etapas[k+1][i][j] }} </td>
+
+						{% endfor %}
+						</tr>
+					{% endfor %}
+					</table>
+				
+				</div>
+
+			</div><hr>	
+			{% endfor %}
+			{% endif %}	
+			
+			<h2>Conjunto solución del sistema:</h2> <br>
+
+			<table class="table table-bordered table-sm">
+                      	
+				<tr>
+
+                      			{% for i in range(0, n) %}
+					<td> <b>X{{ i+1 }}</b> </td>
+					{% endfor %}
+
+				</tr>
+
+				<tr>
+
+                      			{% for i in range(0, n) %}
+					<td>{{ x[i] }}</td>
+					{% endfor %}
+
+                         	</tr>
+              		
+			</table>
+	
+			
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</div>
+
+		<script>
+
+			function ayuda() {
+
+				alert("Ayuda del método.");
+
+			}
+
+		</script>
+
+	</body>
+</html>

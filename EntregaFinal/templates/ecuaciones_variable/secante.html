@@ -1,0 +1,173 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+	<body>
+
+		<br><center>
+			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/secante">
+
+                        <div class="card">
+                        <div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Método de la secante.</h3>
+				</div>
+				<div class="col">
+					<a href="">¿Cómo funciona el método?</a>
+                       			<a href="/establecerFuncion?metodo=secante">Establecer función</a> 
+                       			<a href="/graficar?metodo=secante">Ver gráfica</a> 
+				</div>
+
+			<p>
+El método de la secante puede ser definido como una variable del método de
+newton solo que este no usa derivadas para calcular el x siguiente, lo que ayuda a
+que se utilicen menos operaciones, disminuyendo el error de propagación.
+Este método es otra de las variantes del método de punto fijo, ésta variante en
+específico, esta vez la nueva función g(xn, xn-1) será en función de 2 puntos y
+representará la recta secante que atraviesa estos dos puntos ( g(xn, xn-1) = xn - (
+( f(xn)*(xn-xn-1) ) / ( f(xn)*f(xn-1) ) ) ). Este método nos proporciona una alta
+eficiencia y una mediana rapidez de convergencia, no es tan veloz como el método
+de newton pero igualmente proporciona buenas ventajas además de llegar al 
+11
+resultado sin la necesidad de utilizar la derivada de la función que en muchos casos
+se vuelve muy compleja y de uso de demasiadas operaciones.
+El método de la secante puede ser definido como una variable del método de
+newton solo que este no usa derivadas para calcular el x siguiente, lo que ayuda a
+que se utilicen menos operaciones, disminuyendo el error de propagación.
+			</p>
+
+			</div>
+
+			<hr>
+
+			{% if session["f"] %} 
+			<div class="row">
+
+                                <div class="col">
+                                        <label>X inferior:</label><br>
+                                        <input type="text" name="txtXInferior">
+                                </div>
+
+                                <div class="col">
+                                        <label>X superior:</label><br>
+                                        <input type="text" name="txtXSuperior">
+                                </div>
+
+                                <div class="col">
+                                        <label>Tolerancia:</label><br>
+                                        <input type="text" name="txtTolerancia">
+                                </div>
+
+                                <div class="col">
+                                        <label>Máximo de iteraciones:</label><br>
+                                        <input type="text" name="txtMaximoIteraciones">
+                                </div>
+                                
+				<div class="col">
+                                        <br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+                                </div>
+
+                        </div>
+			{% else %}
+			<div class="row">
+
+				<div class="col">
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x). 
+                       			<a href="/establecerFuncion?metodo=secante">Establecer función</a> 
+					<div>
+				</div>
+
+			</div>
+			{% endif %}
+                        </div>
+                        </div>
+
+                        </form>
+
+		<center>
+
+		{% block content %}
+		{% if mensaje %}
+			
+			<div class="card">
+  			<div class="card-body">
+
+			{% if tipo %}
+
+				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+			{% else %}
+
+				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+			
+			{% endif %}
+				
+			<table class="table table-bordered table-sm">
+				
+				<tr>
+					<td><b>n</b></td>
+					<td><b>Xn</b></td>
+					<td><b>f(Xn)</b></td>
+					<td><b>Error</b></td>
+				</tr>
+
+				{% for i in range(0, numFilas) %}
+                                <tr>
+                                	{% for j in range(0, 4) %}
+                                        	<td>
+							{{ tabla[i][j] }}
+                                                </td>
+
+                                       	{% endfor %}
+                           	</tr>
+                              	{% endfor %}
+
+                	</table>
+
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+
+		</div>
+		
+		<script>
+
+			function ayuda() {
+
+				alert("Ayuda del método.");
+
+			}
+
+		</script>
+
+	</body>
+</html>
+

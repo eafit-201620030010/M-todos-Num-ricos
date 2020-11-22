@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+	<body>
+		{% block content %}
+		<br><center>
+			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/reglaFalsa">
+
+                        <div class="card">
+                        <div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Método de Regla falsa.</h3>
+				</div>
+				<div class="col">
+					<a href="">¿Cómo funciona el método?</a>
+                       			<a href="/establecerFuncion?metodo=reglaFalsa">Establecer función</a> 
+                       			<a href="/graficar?metodo=reglaFalsa">Ver gráfica</a> 
+				</div>
+
+				<p>
+La regla falsa es uno de los métodos convergentes, esto significa que utiliza
+intervalos y la raíz debe encontrarse en los mismos, la aplicación de este método
+cada vez genera aproximaciones cada vez más cercanas a la raíz y converge a
+medida que aumentan las iteraciones del método. El problema de los métodos
+convergentes como este es que por la lentitud de convergencia se pueden generar
+problemas al calcular el error de redondeo, dañando las buenas características del
+intervalo calculado por el método.
+La regla falsa conserva las características del método de bisección excepto la forma
+de calcular el punto intermedio del intervalo. 
+
+				</p>
+
+			</div>
+
+			<hr>
+
+			{% if session["f"] %}
+                        <div class="row">
+
+                                <div class="col">
+                                        <label>X inferior:</label><br>
+                                        <input type="text" name="txtXInferior">
+                                </div>
+
+                                <div class="col">
+                                        <label>X superior:</label><br>
+                                        <input type="text" name="txtXSuperior">
+                                </div>
+
+                                <div class="col">
+                                        <label>Tolerancia:</label><br>
+                                        <input type="text" name="txtTolerancia">
+                                </div>
+
+                                <div class="col">
+                                        <label>Máximo de iteraciones:</label><br>
+                                        <input type="text" name="txtMaximoIteraciones">
+                                </div>
+                                
+				<div class="col">
+                                        <br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+                                </div>
+
+                        </div>
+			{% else %}
+			<div class="row">
+
+				<div class="col">
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x). 
+                       			<a href="/establecerFuncion?metodo=reglaFalsa">Establecer función</a> 
+					<div>
+				</div>
+
+			</div>
+			{% endif %}
+                        </div>
+                        </div>
+
+                        </form>
+
+
+		<center>
+
+		{% if mensaje %}
+			
+			<div class="card">
+  			<div class="card-body">
+				
+			{% if tipo %}
+
+				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+			{% else %}
+
+				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+			
+			{% endif %}
+			
+			<table class="table table-bordered table-sm">
+				<tr>
+					<td><b>i</b></td>
+					<td><b>X inferior</b></td>
+					<td><b>X superior</b></td>
+					<td><b>X medio</b></td>
+					<td><b>f(Xmedio)</b></td>
+					<td><b>Error</b></td>
+				</tr>
+
+				{% for i in range(0, numFilas) %}
+                                <tr>
+                                	{% for j in range(0, 6) %}
+                                        	<td>
+							{{ tabla[i][j] }}
+                                                </td>
+
+                                       	{% endfor %}
+                           	</tr>
+                              	{% endfor %}
+                	</table>
+
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+
+		</div>
+
+		<script>
+
+			function ayuda() {
+
+				alert("Ayuda del método.");
+
+			}
+
+		</script>
+	</body>
+</html>
+

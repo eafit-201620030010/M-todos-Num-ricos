@@ -1,0 +1,164 @@
+<html>
+	<head>
+
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+		<style>
+        		body {
+          			background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       		background-repeat: no-repeat;
+                       		background-attachment: fixed;
+                       		background-size: 100% 100%;
+                     	}
+
+      		</style>
+	
+	</head>
+
+	<body>
+
+		<br><center>
+			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/puntoFijo">
+
+                        <div class="card">
+                        <div class="card-body">
+		
+			<div class="row">
+
+				<div class="col">
+					<h3>Método de Punto fijo.</h3>
+				</div>
+				<div class="col">
+					<a href="">¿Cómo funciona el método?</a>
+                       			<a href="/establecerFuncion?metodo=puntoFijo">Establecer función</a> 
+                       			<a href="/graficar?metodo=puntoFijo">Ver gráfica</a> 
+
+				</div>
+
+				<p>
+Es un método abierto, es decir se basa en formulas que no siempre van a requerir
+de dos valores pero que no siempre encierra la raíz, cuando estos métodos
+convergen lo hacen de manera mas rápida, pero pueden divergir.
+Es un método abierto que sacrifica exactitud por velocidad, partiendo de la ecuación
+f(x) = 0, se genera una nueva función g(x) = x, buscando así un x que reemplazado
+en f y g sea el mismo, este valor de x es invariante para la función g.
+Lo que buscamos es un valor de x tal que g(x) = x corte la recta y=x y esto significaría
+que evaluando en f el resultado sea 0.
+esta g debe ser una función continua y la derivada en x |g´(x)| < 1
+				</p>
+
+			</div>
+
+			<hr>
+
+			{% if session["f"] and session["g"] %}
+                        <div class="row">
+
+                                <div class="col">
+                                        <label>X inicial:</label><br>
+                                        <input type="text" name="txtXInicial">
+                                </div>
+
+                                <div class="col">
+                                        <label>Tolerancia:</label><br>
+                                        <input type="text" name="txtTolerancia">
+                                </div>
+
+                                <div class="col">
+                                        <label>Máximo de iteraciones:</label><br>
+                                        <input type="text" name="txtMaximoIteraciones">
+                                </div>
+                                
+				<div class="col">
+                                        <input type="submit" class="btn btn-primary" value="Ejecutar">
+                                </div>
+
+                        </div>
+			{% else %}
+			<div class="row">
+
+				<div class="col">
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x) y g(x). 
+                       			<a href="/establecerFuncion?metodo=puntoFijo">Establecer funciones</a> 
+					<div>
+				</div>
+
+			</div>
+			{% endif %}
+
+                        </div>
+                        </div>
+
+                        </form>
+
+
+		<center>
+
+		{% block content %}
+		{% if mensaje %}
+			
+			<div class="card">
+  			<div class="card-body">
+				
+			{% if tipo %}
+
+				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+			{% else %}
+
+				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+			
+			{% endif %}
+
+
+			<hr> <table class="table table-bordered table-sm">
+				<tr>
+					<td><b>n</b></td>
+					<td><b>X</b></td>
+					<td><b>f(X)</b></td>
+					<td><b>Error</b></td>
+				</tr>
+
+				{% for i in range(0, numFilas) %}
+                                <tr>
+                                	{% for j in range(0, 4) %}
+                                        	<td>
+							{{ tabla[i][j] }}
+                                                </td>
+
+                                       	{% endfor %}
+                           	</tr>
+                              	{% endfor %}
+			</table>
+
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+
+		</div>
+
+		<script>
+
+			function ayuda() {
+
+				alert("Ayuda del método.");
+
+			}
+
+		</script>
+
+	</body>
+</html>

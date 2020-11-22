@@ -1,0 +1,152 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+	<body>
+
+		{% block content %}
+		<br><center>
+			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/busquedasIncrementales">
+			
+			<div class="card">
+  			<div class="card-body">
+			
+			<div class="row">
+
+				<div class="col">
+					<h3>Búsquedas incrementales.</h3>
+				</div>
+				<div class="col">
+					<a href="" onclick="ayuda()">¿Cómo funciona el método?</a>
+                       			<a href="/establecerFuncion?metodo=busquedasIncrementales">Establecer función</a> 
+                       			<a href="/graficar?metodo=busquedasIncrementales">Ver gráfica</a> 
+				</div>
+			<p>
+			Búsquedas incrementales
+El método de las búsquedas incrementales se basa en el teorema del valor
+intermedio que dice si f es una función continua en el intervalo [a, b] y k es cualquier
+número entre f(a) y f(b) entonces existe un número c en el intervalo (a, b) tal que
+f(c)=k
+Si se cumple que f es continua en el intervalo [a, b] y f(a)*f(b)<0 entonces se dice
+que existe un x medio tal que es raíz y f(x)=0.
+En caso de que se cumpla también que f es diferenciable en (a, b) y f’(x) no cambia
+de signo para todo x que pertenece a [a, b] entonces la raíz x medio tal que f(x
+medio)=0 es única.
+Para hallar la raíz x se debe seguir los siguientes pasos:
+1. Verificar la continuidad de f con argumentos teóricos
+2. Elegir un valor inicial 𝑥0 y un ∆𝑥 que exprese el tamaño del intervalo que se
+desea encontrar
+3. Generar una sucesión de valores 𝑥0, 𝑥1, … , 𝑥𝑛 tal que 𝑥𝑛 = 𝑥𝑛−1 + ∆𝑥
+4. Cada que se genera un valor de 𝑥𝑛, hallamos el valor de f(𝑥𝑛)
+5. Observamos los signos de f(𝑥𝑛) y f(𝑥𝑛−1)
+6. Suspendemos el proceso cuando se presente un cambio de signo en f(𝑥𝑛) y
+f(𝑥𝑛−1) o cuando lleguemos a un limite de iteraciones sin encontrar dicho
+cambio.
+
+			</p>
+
+			</div>
+
+			<hr>
+
+			{% if session["f"] %}
+			<div class="row">
+				
+				<div class="col">	
+					<label>X inicial:</label><br>
+					<input type="text" name="txtXInicial">
+				</div>
+
+				<div class="col">	
+					<label>Delta:</label><br>
+					<input type="text" name="txtDelta">
+				</div>
+
+				<div class="col">	
+					<label>Máximo de iteraciones:</label><br>
+					<input type="text" name="txtMaximoIteraciones">
+				</div>
+
+				<div class="col">	
+					<br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+				</div>
+				
+			</div>
+			{% else %}
+			<div class="row">
+
+				<div class="col">
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x). 
+                       			<a href="/establecerFuncion?metodo=busquedasIncrementales">Establecer función</a> 
+					<div>
+				</div>
+
+			</div>
+			{% endif %}
+		
+			</div>
+			</div>
+
+			</form>
+		<center>
+
+		{% if mensaje %}
+			
+			<div class="card">
+  			<div class="card-body">	
+			
+			{% if tipo %}
+
+				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+			{% else %}
+
+				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+			
+			{% endif %}
+
+			<table class="table table-bordered table-sm">
+
+                          <ol> 
+                            <!-- For loop logic of jinja template -->
+                            {%for i in range(0, numFilas)%} 
+                            
+                            <li>{{tabla[i]}}</li> 
+                            {%endfor%} 
+                            
+                          </ol> 
+                	
+			</table>
+			
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+		</div>
+
+	</body>
+</html>

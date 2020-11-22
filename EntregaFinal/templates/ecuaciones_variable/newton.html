@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+	<body>
+
+		<br><center>
+			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/newton">
+
+                        <div class="card">
+                        <div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Método de Newton.</h3>
+				</div>
+				<div class="col">
+					<a href="">¿Cómo funciona el método?</a>
+                       			<a href="/establecerFuncion?metodo=newton">Establecer función</a> 
+                       			<a href="/graficar?metodo=newton">Ver gráfica</a> 
+				</div>
+
+				<p>
+Este método es un derivado o una variante del método de punto fijo, ésta variante,
+no calcula el x medio por medio de una transformación de la función f(x) = 0, de la
+cual resultaba una nueva ecuación g(x) = x, en vez de esto, la nueva función g(x)
+se calculará a partir de la diferencia entre la variable x y la división entre la función
+original evaluada en x y la derivada de la función evaluada en x ( g(x) = x - ( f(x)/f’(x)
+). Esta variante nos proporciona un método el cuál se considera uno de los métodos
+más eficientes y de más rápida convergencia que hay, esto, sacrificando
+complejidad algorítmica, pues involucra por lo general mayor número de
+operaciones y derivadas de orden superior. Conocido también con el nombre de
+método de las tangentes pues para hacer sus aproximaciones, usa la derivada de
+la función evaluada en un punto, lo que geométricamente representa una línea
+tangente a ese punto.
+En este método se calcula cada x como el intercepto con el eje x de la recta tangente
+al punto x anterior
+				</p>
+
+			</div>
+
+			<hr>
+                        
+			{% if session["f"] and session["df"] %}
+			<div class="row">
+
+                                <div class="col">
+                                        <label>X inicial:</label><br>
+                                        <input type="text" name="txtXInicial">
+                                </div>
+
+                                <div class="col">
+                                        <label>Tolerancia:</label><br>
+                                        <input type="text" name="txtTolerancia">
+                                </div>
+
+                                <div class="col">
+                                        <label>Máximo de iteraciones:</label><br>
+                                        <input type="text" name="txtMaximoIteraciones">
+                                </div>
+                                
+				<div class="col">
+                                        <br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+                                </div>
+
+                        </div>
+			{% else %}
+			<div class="row">
+
+				<div class="col">
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x) y f'(x). 
+                       			<a href="/establecerFuncion?metodo=newton">Establecer funciones</a> 
+					<div>
+				</div>
+
+			</div>
+			{% endif %}
+
+                        </div>
+                        </div>
+
+                        </form>
+
+		<center>
+
+		{% block content %}
+		{% if mensaje %}
+			
+			<div class="card">
+  			<div class="card-body">
+			
+			{% if tipo %}
+
+				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+			{% else %}
+
+				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+			
+			{% endif %}
+				
+			<table class="table table-bordered table-sm">
+				
+				<tr>
+					<td><b>n</b></td>
+					<td><b>X</b></td>
+					<td><b>f(X)</b></td>
+					<td><b>f'(X)</b></td>
+					<td><b>Error</b></td>
+				</tr>
+
+				{% for i in range(0, numFilas) %}
+                                <tr>
+                                	{% for j in range(0, 5) %}
+                                        	<td>
+							{{ tabla[i][j] }}
+                                                </td>
+
+                                       	{% endfor %}
+                           	</tr>
+                              	{% endfor %}
+                	</table>
+
+			</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+
+		</div>
+		
+		<script>
+
+			function ayuda() {
+
+				alert("Ayuda del método.");
+
+			}
+
+		</script>
+
+	</body>
+</html>

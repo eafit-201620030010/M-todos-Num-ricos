@@ -1,0 +1,105 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+	<body>
+
+		{% block content %}
+		<br><center>
+			<h1 style="color:white;">Interpolación</h1>	
+			<a href="/" class="btn btn-primary">Inicio</a>
+			<a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
+		</center><br><br>
+			
+		<div class="container">
+
+			<form method="POST" action="/splineLineal">
+
+                        <div class="card">
+                        <div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Spline lineal.</h3>
+				</div>
+				<div class="col">
+					<a href="">¿Cómo funciona el método?</a>
+				</div>
+
+			</div>
+
+			<hr>
+                       
+			<div class="row">
+
+                                <div class="col">
+                                        <label>Valores X:</label><br>
+                                        <input type="text" name="txtX">
+                                </div>
+
+                                <div class="col">
+                                        <label>Valores Y:</label><br>
+                                        <input type="text" name="txtY">
+                                </div>
+
+                                <div class="col">
+                                        <label>Evaluar en:</label><br>
+                                        <input type="text" name="txtXEval">
+                                </div>
+
+				<div class="col">
+					<br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+                                </div>
+
+                        </div>
+
+                        </div>
+                        </div>
+
+                        </form>
+
+
+		<center>
+
+		{% if yEval %}
+			
+		<div class="card">
+  		<div class="card-body">
+					
+		<label>Valores X: {{x}}</label><br>	
+		<label>Valores Y: {{y}}</label>	
+
+		<div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el spline lineal es igual a {{ yEval }}. </div>
+
+		<label>El spline lineal de grado a lo sumo {{n}} es:</label> <br>
+		{% for i in range(0, numExpr) %}
+		<label> {{expr[i]}} </label><br>
+		{% endfor %}
+		</div>
+		</div>
+
+		{% endif %}
+		{% endblock %}
+
+		</center>
+
+		</div>
+
+	</body>
+</html>
+

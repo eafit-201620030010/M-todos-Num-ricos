@@ -1,0 +1,313 @@
+<html>
+	<head>
+		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<style>
+        	body {
+          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+                       	background-repeat: no-repeat;
+                       	background-attachment: fixed;
+                       	background-size: 100% 100%;
+                     }
+
+      	</style>
+	
+	</head>
+
+<body>
+	<br><center>
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<a href="/" class="btn btn-primary">Inicio</a>
+		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
+	</center><br><br>
+
+	<div class="container">
+
+		<form method="POST" action="/cholesky">
+			
+		<div class="card">
+  		<div class="card-body">
+
+			<div class="row">
+
+				<div class="col">
+					<h3>Cholesky.</h3>
+				</div>
+				<div class="col">
+					<button class="btn btn-link">¿Cómo funciona el método?</button>
+				</div>
+
+			</div>
+
+			<hr>
+
+			<div class="row">
+				
+				<div class="col">
+					
+					<label> Matriz de coeficientes: </label><br>
+					<textarea rows="4" cols="50" name="txtA"></textarea>
+
+				</div>
+				
+				<div class="col">
+				
+					<label> Vector de términos independientes: </label><br>
+					<input type="text" name="txtB">
+			
+				<br><br>
+		
+				<input type="checkbox" name="checkEtapas" id="checkEtapas">
+    				<label for="checkEtapas">Etapas del proceso</label>
+
+				<br><br>
+
+				<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
+					
+				</div>
+
+			</div>
+
+		</div>
+		</div>
+
+		</form>
+
+	{% block content %}
+	{% if n %}
+			
+		<div class="card">
+  		<div class="card-body">
+		
+		<!-- IMPORTANTE -->
+		{% if proceso == True %}	
+
+		<div class="row">
+
+			<div class="col">
+				<h2>Etapas del proceso del proceso:</h2>
+				<label>* Los elementos en amarillo son los que se han calculado en dicha etapa.</label>
+			</div>
+
+		</div> <br>
+
+		{% for k in range(0, numEtapas) %}
+		<div class="row">
+			<div class="col">
+				<h4>Etapa {{k+1}}:</h4>
+			</div>
+		</div> <br>
+
+		<div class="row" style="background-color: white;">
+				
+			<div class="col">
+			
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+					{% for j in range(0, n) %}
+						{% if i >= k and j == k %}
+							<td bgcolor="yellow"> {{ etapas[k][0][i][j] }} </td>
+						{% elif i>=j %}
+							<td> <b>{{ etapas[k][0][i][j] }} </b> </td>
+						{% else %}
+							<td> {{ etapas[k][0][i][j] }} </td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+				<small id="emailHelp" class="form-text text-muted">Matriz L de la etapa {{ k+1 }}.</small>
+			
+			</div>
+				
+			<div class="col">
+					
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+					{% for j in range(0, n) %}
+					{% if i==k and j > k %}
+					<td bgcolor="yellow"> {{ etapas[k][1][i][j] }}</td>
+					{% elif i <= j %}	
+					<td> <b> {{ etapas[k][1][i][j] }} </b> </td>
+					{% else %}
+					<td> {{ etapas[k][1][i][j] }}</td>
+					{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+				<small class="form-text text-muted">Matriz U de la etapa {{ k+1 }}.</small>
+
+			</div>
+
+		</div> <br>
+
+		{% endfor %}
+	
+		<br>
+
+		<div class="row">
+
+			<div class="col">
+				<h2>El resultado del proceso:</h2>
+			</div>
+
+		</div> <br>
+
+		<div class="row">
+		
+			<div class="col">
+			
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+					{% for j in range(0, n) %}
+						{% if i >= j %}
+							<td> <b>{{ etapas[numEtapas-1][0][i][j] }} </b> </td>
+						{% else %}
+							<td> {{ etapas[numEtapas-1][0][i][j] }} </td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+    				<small class="form-text text-muted">Matriz L resultante.</small>
+			</div>
+				
+			<div class="col">
+					
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+					{% for j in range(0, n) %}
+						{% if i <= j %}	
+							<td> <b> {{ etapas[numEtapas-1][1][i][j] }} </b> </td>
+						{% else %}
+							<td> {{ etapas[numEtapas-1][1][i][j] }}</td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+    				<small class="form-text text-muted">Matriz U resultante.</small>
+			</div>
+		
+		</div>
+		
+		<br>
+
+		<div class="row">
+			<div class="col"></div>
+			<div class="col">
+
+				<label>Matriz aumentada Lb.</label>
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+						{% for j in range(0, n+1) %}
+						<td> {{ Lb[i][j] }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+			
+			</div>
+			<div class="col"></div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col"></div>
+			<div class="col">
+
+				<label>Vector z.</label>
+				<table class="table table-bordered table-sm">
+					<tr>
+						{% for i in range(0, n) %}
+						<td> Z{{ i+1 }}</td>
+						{% endfor %}
+					</tr>
+					<tr>
+						{% for i in range(0, n) %}
+						<td> {{ z[i]}}</td>
+						{% endfor %}
+					</tr>
+				</table>
+			
+			</div>
+			<div class="col"></div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col"></div>
+			<div class="col">
+
+				<label>Matriz aumentada Uz.</label>
+				<table class="table table-bordered table-sm">
+				{% for i in range(0, n) %}
+					<tr>
+						{% for j in range(0, n+1) %}
+						<td> {{ Uz[i][j] }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+				</table>
+			
+			</div>
+			<div class="col"></div>
+		</div>
+		
+		{% endif %} <!-- if proceso -->
+
+		<hr>
+
+		<div class="row">
+			
+			<div class="col">
+
+				<h2>Conjunto solución del sistema:</h2> <br>
+				<table class="table table-bordered table-sm">
+                      	
+					<tr>
+                      				{% for i in range(0, n) %}
+						<td> <b>X{{ i + 1 }}</b> </td>
+						{% endfor %}
+					</tr>
+
+					<tr>
+                      				{% for i in range(0, n) %}
+						<td>{{ x[i] }}</td>
+						{% endfor %}
+                         		</tr>
+              		
+				</table>
+
+			</div>
+	
+		</div>
+	
+		</div>
+		</div>
+
+	{% endif %}
+	{% endblock %}
+
+	</div>
+		
+	<script>
+
+		function ayuda() {
+
+			alert("Ayuda del método.");
+
+		}
+
+	</script>
+
+</body>
+
+</html>
+
