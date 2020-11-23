@@ -457,6 +457,7 @@ def jacobiRelajadoWeb():
         xInicial = request.form["txtXInicial"].split(",")
         tolerancia = float(request.form["txtTolerancia"])
         maximoIteraciones = int(request.form["txtMaximoIteraciones"])
+        
 
         A = [] # Matriz de coeficientes.
 
@@ -468,17 +469,20 @@ def jacobiRelajadoWeb():
         for i in range(len(b)): b[i] = float(b[i])
         for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])
 
+        
+
     else:
         return render_template("/sistemas_ecuaciones/jacobi_relajado.html")
 
-@app.route("/gaussSeidelRelajado", methods=["POST", "GET"])
-def gaussSeidelRelajadoWeb():
+@app.route("/SOR", methods=["POST", "GET"])
+def sorWeb():
     
     if request.method == 'POST':
     
         matriz = request.form["txtA"].split("\n")
         b = request.form["txtB"].split(",")
-        xInicial = request.form["txtXInicial"].split(",")
+        xInicial = request.form["txtXo"].split(",")
+        w = int(request.form["txtW"])
         tolerancia = float(request.form["txtTolerancia"])
         maximoIteraciones = int(request.form["txtMaximoIteraciones"])
 
@@ -492,8 +496,13 @@ def gaussSeidelRelajadoWeb():
         for i in range(len(b)): b[i] = float(b[i])
         for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])
 
+        resultado = SORMatricial(A, b, xInicial, tolerancia, maximoIteraciones, w)
+
+        return render_template("/sistemas_ecuaciones/gauss_seidel.html", tabla=resultado[0], numFilas=len(resultado[0]), numColumnas=len(resultado[0][0]),
+                mensaje=resultado[1][0], tipo=resultado[1][1])
+
     else:   
-        return render_template("/sistemas_ecuaciones/gauss_seidel_relajado.html")
+        return render_template("/sistemas_ecuaciones/SOR.html")
 
 # ========================================================================
 # Interpolacion.

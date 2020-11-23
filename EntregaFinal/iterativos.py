@@ -1,7 +1,12 @@
 import math
-import numpy
+import numpy as np
+from tabulate import tabulate
+from sympy import *
+import matplotlib.pyplot as plt
 
 from functions import *
+
+
 
 A = [[45., 13., -4., 8.], [-5., -28., 4., -14.], [9., 15., 63., -7.], [2., 3., -8., -42.]]
 b = [-25., 82., 75., -43.] 
@@ -51,6 +56,32 @@ def disp(x, y):
         if math.fabs(x[i]-y[i]) > mayor: mayor = math.fabs(x[i]-y[i])
 
     return mayor
+
+
+
+
+def solNumpy(array):
+	A = array[:,0:-1]
+	B = array[:,-1]
+	solution = np.linalg.solve(A, B)
+	return solution
+
+def checkSquare(array):
+	rows = len(array)
+	for i in range (0,rows):
+		if len(array[i]) != rows:
+			raise Exception('La matriz debe ser cuadrada')
+	return rows
+
+def checkDet(array):
+	det = np.linalg.det(array)
+	print('Determinante: ' + str(det))
+	if det == 0: raise Exception('La determinante de la matriz debe ser diferente a cero')
+	tol = 10e-4
+	if abs(det) < tol:
+		option = getOption('La determinante es menor a ' + str(tol) 
+			+ ' y puede presentar problemas de evaluación ¿Desea continuar? si[s] no[n]',['s','n'])
+		if option == 'n': raise Exception('Operación abortada por el usuario')
 
 # ---------------------------------------------------------------
 
@@ -138,3 +169,45 @@ def iterativo(previus, tolerancia, maximoIteraciones, A, b, metodo):
         mensaje = ["Fracaso en " + str(maximoIteraciones) + " iteraciones", False]
 
     return [tabla, mensaje]
+
+def SORMatricial(matriz, vector, x0, tol, nMax, w):
+	dimension = checkSquare(matriz)
+	checkDet(matriz)
+	array = np.zeros((dimension,dimension + 1))
+	array[:,:-1] = matriz
+	array[:,-1:] = vector
+	print(tabulate(array))
+
+	numpySol = solNumpy(array)
+
+	D = np.triu(np.tril(matriz))
+
+	L = -np.tril(matriz,-1)
+	U = -np.triu(matriz,+1)
+	Tw = np.dot(np.linalg.inv(D - w*L),((1-w)*D + w*U))
+	print('---Tw---')
+	print(tabulate(Tw, floatfmt='.8f'))
+	radioS = np.amax(abs(np.linalg.eigvals(Tw)))
+	print('Radio espectral: ' + str(radioS))
+
+	Cw = w * np.dot((np.linalg.inv(D - w*L)),vector)
+	print('---Cw---')
+	print(tabulate(Cw, floatfmt='.8f'))
+
+	tabla = []
+	fila = []
+	table = [[0,x0]]
+
+	for n in range(1,nMax):
+		table.append([n])
+
+		table[n].append(np.dot(Tw,table[n-1][1])+Cw)
+		errorAbs = abs(np.linalg.norm(table[n][1])-np.linalg.norm(table[n-1][1]))
+		table[n].append(errorAbs)
+		if errorAbs < tol: break
+	print(tabulate(table, headers=['i','b','E'], floatfmt=['i','.8f','.1E']))
+
+	mensaje = 'La solución es: ' + str(numpySol)
+	print(mensaje)
+	
+	return [table , mensaje]
