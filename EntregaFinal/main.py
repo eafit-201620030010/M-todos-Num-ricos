@@ -623,30 +623,62 @@ def sorWeb():
 	
 	if request.method == 'POST':
 	
-		matriz = request.form["txtA"].split("\n")
-		print(matriz)
+		"""matriz = request.form["txtA"].split("\n")
 		b = request.form["txtB"].split(",")
-		print(b)
 		xInicial = request.form["txtX0"].split(",")
-		print(xInicial)
 		w = float(request.form["txtW"])
-		print(w)
 		tolerancia = float(request.form["txtTolerancia"])
-		print(tolerancia)
 		maximoIteraciones = int(request.form["txtMaximoIteraciones"])
-		print(maximoIteraciones)
+		
 
 		A = [] # Matriz de coeficientes.
-
+		B = []
 		for fila in matriz: A.append(fila.split(","))
 	
 		for i in range(len(A)):
 			for j in range(len(A[0])): A[i][j] = float(A[i][j])
+		
+		for fila in b:
+			B.append(fila.split(","))
+		
+		for i in range(len(B)):
+			for j in range(len(B[0])): B[i][j] = float(B[i][j])
+		
 
-		for i in range(len(b)): b[i] = float(b[i])
-		for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])
+		for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])"""
 
-		resultado = SORMatricial(A, b, xInicial, tolerancia, maximoIteraciones, w)
+		#Para pruebas:
+		A = np.array([[4,-1,0,3],[1,15.5,3,8],[0,-1.3,-4,1.1], [14,5,-2,30]],dtype=np.float64)
+		B = np.array([[1],[1],[1],[1]],dtype=np.float64)
+
+		xInicial = np.array([[0],[0],[0],[0]],dtype=np.float64)
+		tolerancia = 1e-7
+		maximoIteraciones = 100
+		w = 1.5
+
+		resultado = SORMatricial(A, B, xInicial, tolerancia, maximoIteraciones, w)
+		print("*************************Imprimir tabla desde web*************************")
+		contF = 0
+		tempVect = []
+		for fila in resultado[0]:
+
+			print(contF)
+			for element in fila[1]:
+				tempVect.append(element[0])
+			fila[1] = tempVect
+			print(tempVect)
+			contF += 1
+			tempVect = []
+		
+		print("******************************************************************************")
+		print("*************************Imprimir tabla desde web buena*************************")
+		for fila in resultado[0]:
+			print(fila)
+
+		print("******************************************************************************")
+		print("*************************Imprimir mensaje desde web*************************")
+		print(resultado[1])
+		print("******************************************************************************")
 		return render_template("/sistemas_ecuaciones/SOR.html", tabla=resultado[0], numFilas=len(resultado[0]), numColumnas=len(resultado[0][0]),
 				mensaje=resultado[1][0], tipo=resultado[1][1])	
 	else:   
