@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, session, redirect
 
 from functions import *
+import numpy as np
+from math import sqrt
+from tabulate import tabulate
 
 #******* Ecuaciones de una varibale ***********
 from cerrados import *
@@ -15,6 +18,7 @@ from interpolacion import *
 from spline_lineal import *
 from spline_cuadratico import *
 from spline_cubico import *
+from vandermonde import *
 
 app = Flask(__name__)
 
@@ -296,6 +300,146 @@ def pivoteoTotalWeb():
 	else:
 
 		return render_template("/sistemas_ecuaciones/pivoteo-total.html")
+
+
+@app.route("/LUPP", methods=["POST", "GET"])
+def LUPPWeb():
+    
+    if request.method == 'POST':
+        
+        matriz = request.form["txtA"].split("\n")
+        b = request.form["txtB"].split(",")
+
+        A = [] # Matriz de coeficientes.
+        B = []
+        for fila in matriz: A.append(fila.split(","))
+    
+        for i in range(len(A)):
+            for j in range(len(A[0])): A[i][j] = float(A[i][j])
+
+
+        for fila in b: B.append(fila.split(","))
+    
+        for i in range(len(B)):
+            for j in range(len(B[0])): B[i][j] = float(B[i][j])
+
+        for i in range(len(b)): b[i] = float(b[i])
+        
+        A = np.array(A,dtype=np.float64)
+        
+        x = np.array(B,dtype=np.float64)
+        
+        result = LUGaussPivoteoParcialVector(A,x)
+
+        print("-------------------------------------------------------")
+        print(result)
+        
+        r = result[0]
+        
+        #print('----r1-----')
+        #print(r[1])
+        #print('----r2-----')
+        #print(r[2])
+        print('----r3-----')
+        print(r[3])
+
+        return render_template("/sistemas_ecuaciones/LUPP.html", resultado=r[3], mensaje=result[1], sus=result[2], numFilas=len(r[3]))
+
+    else:
+
+        return render_template("/sistemas_ecuaciones/LUPP.html")
+
+
+@app.route("/LUS", methods=["POST", "GET"])
+def LUSWeb():
+    
+    if request.method == 'POST':
+        
+        matriz = request.form["txtA"].split("\n")
+        b = request.form["txtB"].split(",")
+
+        A = [] # Matriz de coeficientes.
+        B = []
+        for fila in matriz: A.append(fila.split(","))
+    
+        for i in range(len(A)):
+            for j in range(len(A[0])): A[i][j] = float(A[i][j])
+
+
+        for fila in b: B.append(fila.split(","))
+    
+        for i in range(len(B)):
+            for j in range(len(B[0])): B[i][j] = float(B[i][j])
+
+        for i in range(len(b)): b[i] = float(b[i])
+        
+        A = np.array(A,dtype=np.float64)
+        
+        x = np.array(B,dtype=np.float64)
+        
+        result = LUGaussVector(A,x)
+
+        print("-----------------------AAA-------------------------------")
+        print(A)
+        
+        r = result[0]
+        
+        #print('----r1-----')
+        #print(r[1])
+        #print('----r2-----')
+        #print(r[2])
+        print('----r3-----')
+        print(r[2])
+
+        return render_template("/sistemas_ecuaciones/LUS.html", resultado=r[2], mensaje=result[1], sus=result[2], numFilas=len(r[2]))
+
+    else:
+
+        return render_template("/sistemas_ecuaciones/LUS.html")
+
+
+@app.route("/vandermonde", methods=["POST", "GET"])
+def vandermondeWeb():
+    
+    if request.method == 'POST':
+        
+        matriz = request.form["txtA"].split("\n")
+    
+        A = [] # Matriz de coeficientes.
+
+        for fila in matriz: A.append(fila.split(","))
+    
+        for i in range(len(A)):
+            for j in range(len(A[0])): A[i][j] = float(A[i][j])
+
+        
+        A = np.array(A,dtype=np.float64)
+        
+
+        print("---------A-------")
+        #print(A)
+        result = vandermonde(A)
+        
+        print("-------------------------------------------------------")
+        print(result)
+        
+        r = result[3]
+        
+        #print('----r1-----')
+        #print(r[1])
+        #print('----r2-----')
+        #print(r[2])
+        print('----poli-----')
+        #print(r)
+        p = r
+        return render_template("/sistemas_ecuaciones/vandermonde.html", matrizA=result[0],vector=result[1],coef=result[2], poli=p, numFilas=len(result[0]))
+
+    else:
+
+        return render_template("/sistemas_ecuaciones/vandermonde.html")
+
+
+
 
 @app.route("/crout", methods=["POST", "GET"])
 def croutWeb():

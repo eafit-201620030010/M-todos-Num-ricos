@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+
+    <style>
+      body {
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+      }
+
+    </style>
+    
+  </head>
+
+  <body>
+    {% block content %}
+    <br><center>
+      <h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+      <a href="/" class="btn btn-primary">Inicio</a>
+      <a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
+    </center><br><br>
+    
+    <div class="container">
+
+      <form method="POST" action="/vandermonde">
+	
+	<div class="card">
+  	  <div class="card-body">
+	    
+	    <div class="row">
+
+	      <div class="col">
+		<h3>Vandermonde</h3>
+	      </div>
+	      <div class="col">
+		<button class="btn btn-link">¿Cómo funciona el método?</button>
+	      </div>
+
+	    </div>
+
+	    <hr>
+
+	    <div class="row">
+	      
+	      <div class="col">
+		
+		<label> Puntos: x,y </label><br>
+		<textarea rows="4" cols="50" name="txtA"></textarea>
+
+	      </div>
+	      
+	      <div class="col">
+		
+		
+		<br><br>
+		
+		
+		
+		<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
+		
+	      </div>
+
+	    </div>
+
+	  </div>
+	</div>
+
+      </form>
+      <div class="card">
+        <div class="card-body">
+          
+          <h2>Matriz A</h2>
+          
+          <!-- For loop logic of jinja template -->
+          {%for i in matrizA%} 
+          <p>{{i}}</p> 
+          {%endfor%}
+          <h2>vector</h2>
+          <p>{{vector}}</p>
+          <h2>Coeficiente</h2>
+          <p>{{coef}}</p>
+          <h2>Polinomio</h2>
+          <p>{{poli}}</p>
+        </div>
+      </div>
+      
+      <script>
+
+	function ayuda() {
+
+	  alert("Ayuda del método.");
+
+	}
+
+      </script>
+      {% endblock %}
+  </body>
+</html>
+
