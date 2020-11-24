@@ -80,6 +80,36 @@
 		</div>
 
 		</form>
+		{% block content %}
+		{% if mensaje %}
+			
+			<div class="card">
+				<div class="card-body">
+					
+					{% if tipo %}
+
+						<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
+
+					{% else %}
+
+						<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
+					
+					{% endif %}
+					
+					<table class="table table-bordered table-sm">
+						<tr>
+							<th>i</th>
+							<th>b</th>
+							<th>Error</th>
+						</tr>
+						
+					</table>
+
+				</div>
+			</div>
+
+		{% endif %}
+		{% endblock %}
 
 
 	</div>
