@@ -480,11 +480,17 @@ def sorWeb():
 	if request.method == 'POST':
 	
 		matriz = request.form["txtA"].split("\n")
+		print(matriz)
 		b = request.form["txtB"].split(",")
-		xInicial = request.form["txtXo"].split(",")
-		w = int(request.form["txtW"])
+		print(b)
+		xInicial = request.form["txtX0"].split(",")
+		print(xInicial)
+		w = float(request.form["txtW"])
+		print(w)
 		tolerancia = float(request.form["txtTolerancia"])
+		print(tolerancia)
 		maximoIteraciones = int(request.form["txtMaximoIteraciones"])
+		print(maximoIteraciones)
 
 		A = [] # Matriz de coeficientes.
 
