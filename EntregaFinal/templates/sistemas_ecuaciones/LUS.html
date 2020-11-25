@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
 
     <style>
       body {
@@ -13,24 +13,24 @@
       }
 
     </style>
-    
+
   </head>
 
   <body>
     {% block content %}
     <br><center>
-      <h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+      <h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
       <a href="/" class="btn btn-primary">Inicio</a>
       <a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
     </center><br><br>
-    
+
     <div class="container">
 
       <form method="POST" action="/LUS">
-	
+
 	<div class="card">
   	  <div class="card-body">
-	    
+
 	    <div class="row">
 
 	      <div class="col">
@@ -41,29 +41,37 @@
 	      </div>
 
 	    </div>
+      <p>
+        La factorización LU de una matriz es una factorización que resume el proceso de eliminación
+        gaussiana aplicado a la matriz y que es conveniente en términos del número total de operaciones
+        de punto flotante cuando se desea calcular la inversa de una matriz o cuando se resolverá una
+        serie de sistemas de ecuaciones con una misma matriz de coeficientes. En la lectura, primeramente
+        consideraremos la factorización LU sin intercambio basada en matrices elementales y que es conocida
+        como de Doolittle y posteriormente veremos el algoritmo que da la factorización
+      </p>
 
 	    <hr>
 
 	    <div class="row">
-	      
+
 	      <div class="col">
-		
+
 		<label> Matriz de coeficientes: </label><br>
 		<textarea rows="4" cols="50" name="txtA"></textarea>
 
 	      </div>
-	      
+
 	      <div class="col">
-		
+
 		<label> Vector de términos independientes: </label><br>
 		<input type="text" name="txtB">
-		
+
 		<br><br>
-		
-		
-		
+
+
+
 		<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-		
+
 	      </div>
 
 	    </div>
@@ -72,7 +80,7 @@
 	</div>
 
       </form>
-      
+
       <div class="card">
         <div class="card-body">
           	<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
@@ -81,7 +89,7 @@
 		  <tr>
 		    <th>Solución</th>
 		  </tr>
-                  
+
 		  {% for i in resultado %}
 		  <tr>
 		    <td>{{i}}</td>
@@ -90,7 +98,7 @@
 		</table>
 
           <h2>Sustitucion Regresiva</h2>
-          <p>{{sus}}</p> 
+          <p>{{sus}}</p>
         </div>
       </div>
       <script>
@@ -105,4 +113,3 @@
       {% endblock %}
   </body>
 </html>
-
