@@ -726,11 +726,21 @@ def newtonDiferenciasDivididasWeb():
 
 		for i in range(len(x)): x[i] = float(x[i])
 		for i in range(len(y)): y[i] = float(y[i])
-
+		puntos = []
+		
+		for i in range(len(x)):
+			punto = []
+			punto.append(x[i])
+			punto.append(y[i])
+			puntos.append(punto)
+		
+		polinomios = newtonDD(puntos)
+		polExp = polinomios[0]
+		polSim = polinomios[1]
 		b = calcularB(x, y)
 		yEval = p(xEval, b, x)
 		
-		return render_template("/interpolacion/diferencias_divididas_newton.html", b=b, xEval=xEval, yEval=yEval, x=x, y=y, n=len(x)-1)
+		return render_template("/interpolacion/diferencias_divididas_newton.html", b=b, polExp = polExp, polSim = polSim, xEval=xEval, yEval=yEval, x=x, y=y, n=len(x)-1)
 
 	else:
 		

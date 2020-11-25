@@ -34,16 +34,19 @@ def newtonDD(puntos):
 			factor *= sympify('x - ' + str(tabla[j][1]))
 		expr += c * factor
 	print('---Polinomio expandido---')
-	print(pretty(expr))
+	polExp = pretty(expr)
+	print(polExp)
 	print()
 	print('---Polinomio simplificado---')
 	expr = simplify(expr)
-	print(pretty(expr))
+	polSim = pretty(expr)
+	print(polSim)
 	print()	
+	return [polExp, polSim]
 
 #puntos = [[1,0.6747],[1.2,0.8491],[1.4,1.1214],
 #[1.6,1.4921],[1.8,1.9607],[2,2.5258]]
-puntos = [[-1,15.5],[0.0,3.0],[3.0,8.0],[4,1.0]]
+#puntos = [[-1,15.5],[0.0,3.0],[3.0,8.0],[4,1.0]]
 
 
-newtonDD(puntos)
+#newtonDD(puntos)
