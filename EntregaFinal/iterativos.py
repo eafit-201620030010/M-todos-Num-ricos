@@ -207,7 +207,7 @@ def SORMatricial(matriz, vector, x0, tol, nMax, w):
 		if errorAbs < tol: break
 	print(tabulate(table, headers=['i','b','E'], floatfmt=['i','.8f','.1E']))
 
-	mensaje = 'La solución es: ' + str(numpySol)
-	print(mensaje)
+	mensaje = ['La solución al sistema es: ' + str(numpySol) + " con tolerancia: "+str(tol), True]
+	print(mensaje) 
 	
 	return [table , mensaje]
