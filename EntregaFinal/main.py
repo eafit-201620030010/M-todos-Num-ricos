@@ -679,7 +679,7 @@ def sorWeb():
 			for element in fila[1]:
 				#print("elemento")
 				#print(element)
-				tempVect.append(element[0]) #Esta linea funciona bien con la prueba pero no en la web
+				tempVect.append(element) #Esta linea funciona bien con la prueba pero no en la web
 				#tempVect.append(element)
 				#print(element[0])
 			fila[1] = tempVect
