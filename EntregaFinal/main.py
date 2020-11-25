@@ -19,6 +19,7 @@ from spline_lineal import *
 from spline_cuadratico import *
 from spline_cubico import *
 from vandermonde import *
+from newtonDD import *
 
 app = Flask(__name__)
 
@@ -714,7 +715,7 @@ def sorWeb():
 # Interpolacion.
 # ========================================================================
 
-@app.route("/diferenciasDivididas", methods=["POST", "GET"])
+@app.route("/diferenciasDivididasNewton", methods=["POST", "GET"])
 def newtonDiferenciasDivididasWeb():
 
 	if request.method == 'POST':
@@ -729,11 +730,11 @@ def newtonDiferenciasDivididasWeb():
 		b = calcularB(x, y)
 		yEval = p(xEval, b, x)
 		
-		return render_template("/interpolacion/diferencias_divididas.html", b=b, xEval=xEval, yEval=yEval, x=x, y=y, n=len(x)-1)
+		return render_template("/interpolacion/diferencias_divididas_newton.html", b=b, xEval=xEval, yEval=yEval, x=x, y=y, n=len(x)-1)
 
 	else:
 		
-		return render_template("/interpolacion/diferencias_divididas.html")
+		return render_template("/interpolacion/diferencias_divididas_newton.html")
 
 @app.route("/lagrange", methods=["POST", "GET"])
 def lagrangeWeb():
