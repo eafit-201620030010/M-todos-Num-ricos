@@ -76,11 +76,19 @@
       <div class="card">
         <div class="card-body">
           	<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
-          <!-- For loop logic of jinja template -->
-          {%for i in resultado%} 
-          
-          <p>{{i}}</p> 
-          {%endfor%}
+
+                <table class="table table-bordered table-sm">
+		  <tr>
+		    <th>Solución</th>
+		  </tr>
+                  
+		  {% for i in resultado %}
+		  <tr>
+		    <td>{{i}}</td>
+		  </tr>
+		  {% endfor %}
+		</table>
+
           <h2>Sustitucion Regresiva</h2>
           <p>{{sus}}</p> 
         </div>
