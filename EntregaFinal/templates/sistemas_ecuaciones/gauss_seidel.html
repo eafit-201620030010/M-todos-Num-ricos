@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,12 +13,12 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
@@ -26,7 +26,7 @@
 	<div class="container">
 
 		<form method="POST" action="/jacobi">
-			
+
 		<div class="card">
   		<div class="card-body">
 
@@ -40,42 +40,59 @@
 				</div>
 
 			</div>
-
+			<p>
+				<p>Este método es muy semejante al de Jacobi, mientras que en el de Jacobi se utiliza el valor de las incógnitas para determinar una nueva aproximación, el de Seidel va utilizando los valores de las incógnitas recién calculados en la misma iteración.</p>
+				<p>Pasos a seguir:</p>
+					<li>Organizar el sistema de ecuaciones en forma matricial.</li>
+					<li>Se elige un vector para darle valores iniciales a las incógnitas de las ecuaciones. Este vector será la primera aproximación para el método iterativo.</li>
+					<li>El método comienza a hacer ciclos cambiando la aproximación del vector solución hasta que se cumpla alguno de los criterios de parada.</li>
+					<li>Para iniciar los métodos iterativos, la matriz debe cumplir ciertos parámetros para poder entrar a los ciclos. La matriz se debe partir en tres. Una con
+						la diagonal (D), otra con los términos por debajo de la diagonal con signos contrarios (L) y otra con los términos por encima de la diagonal con signos contrarios (U).</li>
+			</p>
+			<p>
+				<p>Ventajas:</p>
+					<li>Si la matriz de coeficientes original del sistema es diagonalmente dominante el método converge.</li>
+					<li>Si el radio espectral de la matriz original es menor a uno, el método converge.</li>
+			</p>
+			<p>
+				<p>Desventajas:</p>
+					<li>El método no siempre converge y calcular el radio espectral de la matriz puede ser muy extenso.</li>
+			</p>
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
-					
+
 					<br><br>
 
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector X inicial: </label><br>
 					<input type="text" name="txtXInicial">
-			
+
 					<br><br>
-					
+
 					<label> Tolerancia: </label><br>
 					<input type="text" name="txtTolerancia">
-			
+
 					<br><br>
-					
+
 					<label> Máximo de interaciones: </label><br>
 					<input type="text" name="txtMaximoIteraciones">
 
 					<br><br>
 
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -87,10 +104,10 @@
 
 		{% block content %}
 		{% if mensaje %}
-			
+
 			<div class="card">
   			<div class="card-body">
-				
+
 			{% if tipo %}
 
 				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
@@ -98,11 +115,11 @@
 			{% else %}
 
 				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
-			
+
 			{% endif %}
-			
+
 			<table class="table table-bordered table-sm">
-				
+
 				<tr>
 					<td><b>i</b></td>
 					{% for i in range(0, numColumnas-2)%}
@@ -130,7 +147,7 @@
 		{% endblock %}
 
 	</div>
-		
+
 	<script>
 
 		function ayuda() {
@@ -143,4 +160,3 @@
 
 </body>
 </html>
-

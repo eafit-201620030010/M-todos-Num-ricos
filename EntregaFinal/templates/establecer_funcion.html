@@ -6,10 +6,10 @@
 	</head>
 
         <body>
-		
+
 		{% block content %}
 		<form method="POST" action="/establecerFuncion">
-		
+			
 			<b> Funciones establecidas: </b> <br><br>
 
 			<b> f(x): </b> <label> {{f}} </label> <br><br>
@@ -20,16 +20,16 @@
 			<hr>
 
 			<b> Establecer funciones: </b> <br><br>
-			
+
 			<label>f(x): </label>
 			<input type="text" name="f"> <br><br>
-			
+
 			<label>g(x): </label>
 			<input type="text" name="g"> <br><br>
-			
+
 			<label>f'(x): </label>
 			<input type="text" name="df"> <br><br>
-			
+
 			<label>f''(x): </label>
 			<input type="text" name="ddf"> <br><br>
 
@@ -41,4 +41,3 @@
 
 	</body>
 </html>
-

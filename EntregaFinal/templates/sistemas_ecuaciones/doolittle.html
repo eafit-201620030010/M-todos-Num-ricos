@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,12 +13,12 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
@@ -26,7 +26,7 @@
 	<div class="container">
 
 		<form method="POST" action="/doolittle">
-			
+
 		<div class="card">
   		<div class="card-body">
 
@@ -38,34 +38,51 @@
 				<div class="col">
 					<button class="btn btn-link">¿Cómo funciona el método?</button>
 				</div>
+				<p>
+					Se desea resolver el sistema Ax=b ,Los métodos que están basados en la factorización de matrices reemplazan
+					la matriz de coeficientes A por dos matrices triangulares L y U que son triangular inferior y triangular
+					superior respectivamente y cuyo producto es igual a ella (matriz A) , es decir se debe encontrar L y U tales que A=L*U ,
+					al realizar esta transformación obtenemos que LUx=b y a su vez que Ux=z , obteniendo asi  Lz=b
+				</p>
+				<li>
+					El procedimiento para encontrar la solución de x que satisfaga Ax=b es el siguiente:
+					<p>1. Encontrar la solución al sistema Lz=b</p>
+					<p>2. Luego de tener el vector solución z , procedemos a reemplazarlo en Ux=z</p>
+					<p>3. Encontrar la solución del sistema Ux=z y así se obtiene el vector solución x el cual satisface Ax=b</p>
+				</li>
+				<p>Dado que L es matriz triangular inferior la solución del sistema Lz=b es una sustitución progresiva , de forma similar , como U es triangular superior la solución del sistema Ux=z es una sustitución regresiva</p>
+				<p>Existen varios métodos para la encontrar los valores de el vector solución X, entre ellos se encuentra  el método de Crout.</p>
+				<p>Este método pretende que la diagonal principal de la matriz L sea 1 es decir Lii=1</p>
+				<p>Esto permite despejar fácilmente los valores de L y U para hallar la matriz LU=A</p>
+				</p>
 
 			</div>
 
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
-			
+
 				<br><br>
-		
+
 				<input type="checkbox" name="checkEtapas" id="checkEtapas">
     				<label for="checkEtapas">Etapas del proceso</label>
 
 				<br><br>
 
 				<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -77,12 +94,12 @@
 
 	{% block content %}
 	{% if n %}
-			
+
 		<div class="card">
   		<div class="card-body">
-		
+
 		<!-- IMPORTANTE -->
-		{% if proceso == True %}	
+		{% if proceso == True %}
 
 		<div class="row">
 
@@ -101,9 +118,9 @@
 		</div> <br>
 
 		<div class="row" style="background-color: white;">
-				
+
 			<div class="col">
-			
+
 				<table class="table table-bordered table-sm">
 				{% for i in range(0, n) %}
 					<tr>
@@ -120,18 +137,18 @@
 				{% endfor %}
 				</table>
 				<small id="emailHelp" class="form-text text-muted">Matriz L de la etapa {{ k+1 }}.</small>
-			
+
 			</div>
-				
+
 			<div class="col">
-					
+
 				<table class="table table-bordered table-sm">
 				{% for i in range(0, n) %}
 					<tr>
 					{% for j in range(0, n) %}
 					{% if i==k and j >= k %}
 					<td bgcolor="yellow"> {{ etapas[k][1][i][j] }}</td>
-					{% elif i <= j %}	
+					{% elif i <= j %}
 					<td> <b> {{ etapas[k][1][i][j] }} </b> </td>
 					{% else %}
 					<td> {{ etapas[k][1][i][j] }}</td>
@@ -147,7 +164,7 @@
 		</div> <br>
 
 		{% endfor %}
-	
+
 		<br>
 
 		<div class="row">
@@ -159,9 +176,9 @@
 		</div> <br>
 
 		<div class="row">
-		
+
 			<div class="col">
-			
+
 				<table class="table table-bordered table-sm">
 				{% for i in range(0, n) %}
 					<tr>
@@ -177,14 +194,14 @@
 				</table>
     				<small class="form-text text-muted">Matriz L resultante.</small>
 			</div>
-				
+
 			<div class="col">
-					
+
 				<table class="table table-bordered table-sm">
 				{% for i in range(0, n) %}
 					<tr>
 					{% for j in range(0, n) %}
-						{% if i <= j %}	
+						{% if i <= j %}
 							<td> <b> {{ etapas[numEtapas-1][1][i][j] }} </b> </td>
 						{% else %}
 							<td> {{ etapas[numEtapas-1][1][i][j] }}</td>
@@ -195,9 +212,9 @@
 				</table>
     				<small class="form-text text-muted">Matriz U resultante.</small>
 			</div>
-		
+
 		</div>
-		
+
 		<br>
 
 		<div class="row">
@@ -214,7 +231,7 @@
 					</tr>
 				{% endfor %}
 				</table>
-			
+
 			</div>
 			<div class="col"></div>
 		</div>
@@ -236,7 +253,7 @@
 						{% endfor %}
 					</tr>
 				</table>
-			
+
 			</div>
 			<div class="col"></div>
 		</div>
@@ -255,22 +272,22 @@
 					</tr>
 				{% endfor %}
 				</table>
-			
+
 			</div>
 			<div class="col"></div>
 		</div>
-		
+
 		{% endif %} <!-- if proceso -->
 
 		<hr>
 
 		<div class="row">
-			
+
 			<div class="col">
 
 				<h2>Conjunto solución del sistema:</h2> <br>
 				<table class="table table-bordered table-sm">
-                      	
+
 					<tr>
                       				{% for i in range(0, n) %}
 						<td> <b>X{{ i + 1 }}</b> </td>
@@ -282,13 +299,13 @@
 						<td>{{ x[i] }}</td>
 						{% endfor %}
                          		</tr>
-              		
+
 				</table>
 
 			</div>
-	
+
 		</div>
-	
+
 		</div>
 		</div>
 
@@ -296,7 +313,7 @@
 	{% endblock %}
 
 	</div>
-	
+
 	<script>
 
 		function ayuda() {

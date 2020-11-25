@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,12 +13,12 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
@@ -26,7 +26,7 @@
 	<div class="container">
 
 		<form method="POST" action="/gaussianaSimple">
-			
+
 		<div class="card">
   		<div class="card-body">
 
@@ -40,27 +40,42 @@
 				</div>
 
 			</div>
+			<p>
+				<p>Este método tiene como objetivo mejorar la convergencia del método Jacobi,
+					con el cual es posible hallar las aproximaciones a una solución de sistemas de ecuaciones lineales
+					utilizando los valores iniciales para la primera aproximación, luego los de la primera para la segunda y
+					así sucesivamente; en este método el cálculo de cada variable es independiente (ninguna variable depende de la otra).</p>
+					<p>
+					<p>Para aplicar el método se debe tener en cuenta la siguiente estrategia:</p>
+						<li>Introducir los parámetros de entrada del método: aproximaciones iniciales, matriz de coeficientes,
+							vector de términos independientes, una tolerancia, un número máximo de iteraciones y el coeficiente de relajación.</li>
+						<li>Con las aproximaciones iniciales se hallan las nuevas aproximaciones teniendo en cuenta el mismo proceso utilizado
+							en el método de Jacobi.</li>
+						<li>En cada etapa se calcula la medida de la dispersión (error) entre la aproximación actual y la anterior.
+							Esto se calcula utilizando la norma euclidiana. </li>
+					</p>
+					</p>
 
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
-			
+
 					<br><br>
-			
+
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -72,7 +87,7 @@
 
 
 	</div>
-		
+
 	<script>
 
 		function ayuda() {
@@ -85,4 +100,3 @@
 
 </body>
 </html>
-

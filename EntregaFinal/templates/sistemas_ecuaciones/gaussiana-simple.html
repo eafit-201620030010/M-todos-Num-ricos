@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,20 +13,20 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
-			
+
 	<div class="container">
 
 		<form method="POST" action="/gaussianaSimple">
-			
+
 		<div class="card">
   		<div class="card-body">
 
@@ -39,52 +39,55 @@
 					<button class="btn btn-link">¿Cómo funciona el método?</button>
 				</div>
 
-			<p>
-
-			La eliminación Gaussiana simple consiste en dos procesos fundamentales. El
-primero es la transformación del sistema para obtener uno equivalente mediante
-uso de operaciones elementales (intercambio de filas, sumar una fila con un múltiplo
-de otra y multiplicar una fila por un escalar no nulo) cuya matriz de coeficientes es
-triangular superior (tiene ceros debajo de la diagonal principal) y el segundo proceso
-es llevar a cabo un proceso de despeje regresivo con el sistema equivalente para
-así hallar la solución al sistema inicial.
-Esto se expresa de la siguiente manera:
-Ax=b es el sistema inicial, mediante operaciones elementales se obtiene el sistema
-equivalente Ux=B de forma que, U es triangular superior, luego se lleva a cabo
-sustitución regresiva, es decir primero se va a encontrar la solución de 𝑥𝑛 luego la
-solución de 𝑥𝑛−1 y así sucesivamente hasta llegar a 𝑥1y con esto se obtiene la
-solución al sistema original.
-El algoritmo recibe una matriz de coeficientes, un vector de términos independientes
-y el tamaño de la matriz, para finalmente retornar los valores de x
+			<p> <li>La eliminación Gaussiana simple consiste en dos procesos fundamentales:
+				<p></p>
+				<p>- El primer proceso es la transformación del sistema para obtener uno equivalente mediante
+					uso de operaciones elementales (intercambio de filas, sumar una fila con un múltiplo
+					de otra y multiplicar una fila por un escalar no nulo) cuya matriz de coeficientes es
+					triangular superior (tiene ceros debajo de la diagonal principal)</p>
+				<p>- El segundo proceso es llevar a cabo un proceso de despeje regresivo con el sistema
+					equivalente para así hallar la solución al sistema inicial.</p>
+				<p>
+				<li>Esto se expresa de la siguiente manera:
+				<p></p>
+				<p>1. Ax=b es el sistema inicial, mediante operaciones elementales se obtiene el sistema
+					equivalente Ux=B de forma que, U es triangular superior.</p>
+				<p>2. luego se lleva a cabo sustitución regresiva, es decir primero se va a encontrar la solución
+					de 𝑥𝑛 luego la solución de 𝑥𝑛−1 y así sucesivamente hasta llegar a 𝑥1y con esto se obtiene la
+					solución al sistema original.</p>
+				</li>
+				<li>El algoritmo recibe una matriz de coeficientes, un vector de términos independientes
+					y el tamaño de la matriz, para finalmente retornar los valores de x</li>
 			</p>
+		</p>
 
 			</div>
 
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
-			
+
 					<br><br>
-			
+
 					<input type="checkbox" name="checkEtapas" id="checkEtapas">
     					<label for="checkEtapas">Etapas del proceso</label>
-					
-					<br><br>	
+
+					<br><br>
 
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -96,36 +99,36 @@ y el tamaño de la matriz, para finalmente retornar los valores de x
 
 		{% block content %}
 		{% if n %}
-			
+
 			<div class="card">
   			<div class="card-body">
 
 			<!-- IMPORTANTE -->
-			{% if proceso == True %}	
+			{% if proceso == True %}
 
 			<label>* Los elementos de la matriz en negrita son los que se volverán 0 en la etapa.</label>
 			<h2>Etapas del proceso:</h2> <br>
 
 			{% for k in range(0, numEtapas) %}
 			<div class="row" style="background-color: white;">
-					
+
 
 				<div class="col">
-			
+
 					<h5>Etapa {{k+1}}:</h5>
 
 					<table class="table table-bordered table-sm">
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							<td>
 							{% if j == k and i > k %}
 
 							<b>{{ etapas[k][i][j] }}</b>
 
 							{% else %}
-							
+
 							{{ etapas[k][i][j] }}
 
 							{% endif %}
@@ -135,36 +138,36 @@ y el tamaño de la matriz, para finalmente retornar los valores de x
 						</tr>
 					{% endfor %}
 					</table>
-					
+
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label>Matriz resultante de la etapa:</label>
 
 					<table class="table table-bordered table-sm">
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							<td> {{ etapas[k+1][i][j] }} </td>
 
 						{% endfor %}
 						</tr>
 					{% endfor %}
 					</table>
-					
+
 				</div>
 
-			</div><hr>	
+			</div><hr>
 			{% endfor %}
-			
+
 			{% endif %}
-			
+
 			<h2>Conjunto solución del sistema:</h2> <br>
 
 			<table class="table table-bordered table-sm">
-                      	
+
 				<tr>
 
                       			{% for i in range(0, n) %}
@@ -180,10 +183,10 @@ y el tamaño de la matriz, para finalmente retornar los valores de x
 					{% endfor %}
 
                          	</tr>
-              		
+
 			</table>
-	
-			
+
+
 			</div>
 			</div>
 
@@ -191,7 +194,7 @@ y el tamaño de la matriz, para finalmente retornar los valores de x
 		{% endblock %}
 
 	</div>
-		
+
 	<script>
 
 		function ayuda() {

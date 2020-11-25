@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,21 +13,21 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
-	
+
 	<div class="container">
 
 		<form method="POST" action="/SOR">
-			
+
 		<div class="card">
   		<div class="card-body">
 
@@ -41,13 +41,28 @@
 				</div>
 
 			</div>
-
+			<p>
+				<p>Este método intenta mejorar la convergencia del método de Gauss- Seidel mediante el refinamiento de la aproximación actual.</p>
+				<p>Se crea un parámetro “w” como ponderación entre las aproximaciones, es decir, la actual y la anterior.</p>
+				<p>
+				<p>En este sentido el valor de w se utiliza según las siguientes condiciones:</p>
+					<li>Si w=1 el factor (1-w) se hace cero, en este caso decimos que no hay relajación. Lo que significa que el método cuando w=1, es el mismo de Gauss-Seidel.</li>
+					<li>Si 0 < w < 1, el valor definitivo de la aproximación de la componente “i” en la etapa “k” está entre los valores del exponente de xi (k) y (k-1), dependiendo del valor de w el resultado será más próximo a uno de los dos valores. Cuando se utiliza este valor se denomina método de sub-relajación y se emplea para obtener la convergencia en algunos sistemas que no so convergentes por el método de Gauss-Seidel. </li>
+					<li>Si 1 < w < 2, el valor definitivo de la aproximación de la componente “i” de la etapa “k” está próximo al exponente de xi (k) pero no está entre los valores del exponente de xi (k) y (k-1). Este método se conoce como sobre-relajación y se utiliza para acelerar la convergencia de sistemas que son convergentes y lentos con el método de Gauss-Seidel.</li>
+				</p><p>
+				<p>Ventajas</p>
+					<li>Proporciona mayor probabilidad de convergencia para los sistemas.</li>
+					<li>Da mayor rapidez que Gauss-Seidel a algunos de los métodos.</li>
+				</p>
+				<p>Desventajas</p>
+					<li>Solo se puede sub-relajar o sobre-relajar en un 100%.</li>
+			</p>
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
                     <textarea rows="4" cols="50" name="txtA"></textarea>
                     <br><br>
@@ -58,7 +73,7 @@
                     <input type="text" name="txtX0">
 
 				</div>
-				
+
 				<div class="col">
                     <label> W (Coeficiente de relajación): </label><br>
                     <input type="text" name="txtW">
@@ -71,7 +86,7 @@
                     <br><br>
 
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -83,7 +98,7 @@
 
 
 	</div>
-		
+
 	<script>
 
 		function ayuda() {
@@ -96,4 +111,3 @@
 
 </body>
 </html>
-

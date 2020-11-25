@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,24 +13,24 @@
                      }
 
       	</style>
-	
+
 </head>
 
 <body>
 
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
-			
+
 	<div class="container">
 
 			<form method="POST" action="/pivoteoTotal">
-			
+
 			<div class="card">
   			<div class="card-body">
-			
+
 			<div class="row">
 
 				<div class="col">
@@ -39,34 +39,57 @@
 				<div class="col">
 					<button class="btn btn-link">¿Cómo funciona el método?</button>
 				</div>
+				<p>
+					Con el pivoteo total se coloca sobre la diagonal los valores mayores posibles de cada submatriz, los multiplicadores conservan las mismas propiedades del pivoteo parcial.</p>
+				<p>
+					En cada paso de la eliminación Gaussiana se selecciona el mayor pivote entre los candidatos (todos los de la matriz, filas y columnas), aquel cuyo valor absoluto sea más grande.</p>
+				<li>
 
+	Pasos a seguir:
+
+		<p>1. Se escribe el sistema de ecuaciones de forma matricial.</p>
+		<p>2. Se selecciona el número mayor en valor absoluto de la matriz, sin importar si es de otra columna o fila.</p>
+		<p>3. Se lleva a cabo el proceso de eliminación Gaussiana.</p>
+		<p>4. Se repite el proceso para las siguientes columnas hasta terminar el sistema.</p>
+
+	</li>
+	<li>
+		Ventajas:
+		<p>- No altera ni aumenta las operaciones que se realizan para la eliminación.</p>
+		<p>- Reduce los efectos de error de redondeo.</p>
+		<p>- Es más efectivo que el proceso de pivoteo parcial porque se garantiza que se divide por el número más grande de toda la matriz.</p>
+	</li>
+	<li>
+		Desventajas:
+		<p>- A la hora de ser programado puede demorar a la máquina mucho tiempo si el sistema es muy grande porque ésta deberá analizar todos los términos de la matriz en cada paso.</p>
+</li>
 			</div>
 
 			<hr>
 
 			<div class="row">
-				
+
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
-			
+
 					<br><br>
-					
+
 					<input type="checkbox" name="checkEtapas" id="checkEtapas">
     					<label for="checkEtapas">Etapas del proceso</label>
-					
-					<br><br>	
-			
+
+					<br><br>
+
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
 
 			</div>
@@ -78,21 +101,21 @@
 
 		{% block content %}
 		{% if n %}
-			
+
 			<div class="card">
   			<div class="card-body">
-			
+
 			<!-- IMPORTANTE -->
-			{% if proceso == True %}	
+			{% if proceso == True %}
 			<h2>Etapas del proceso:</h2> <br>
 
 			{% for k in range(0, numEtapas-1) %}
 			<div class="row">
-		
+
 				<div class="col">
 
 					<h3>Etapa {{k+1}}:</h3>
-					
+
 					{% if mayorList[k][0]!=k %}
 						<label>Se produce un intercambio de filas: [F{{ mayorList[k][0] }} <-> F{{ k }}]</label> <br>
 					{% endif %}
@@ -107,10 +130,10 @@
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-							
+
 							{% if i==mayorList[k][0] and j==mayorList[k][1] %}
 								<td bgcolor="#FFFC33"> {{ etapasPrevias[k][i][j] }} </td>
-							{% else %}	
+							{% else %}
 								<td> {{ etapasPrevias[k][i][j] }} </td>
 							{% endif %}
 
@@ -123,14 +146,14 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					
+
 					<label>Esta es la matriz después del intercambio, los elementos seleccionados se convertirán en 0:</label>
 
 					<table class="table table-bordered table-sm">
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							{% if j == k and i > k %}
 								<td bgcolor="#33FF5E"> {{ etapas[k][i][j] }} </td>
 							{% else %}
@@ -141,7 +164,7 @@
 						</tr>
 					{% endfor %}
 					</table>
-					
+
 				</div>
 			</div>
 			<div class="row">
@@ -156,24 +179,24 @@
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							<td> {{ etapas[k+1][i][j] }} </td>
 
 						{% endfor %}
 						</tr>
 					{% endfor %}
 					</table>
-				
+
 				</div>
 
-			</div><hr>	
+			</div><hr>
 			{% endfor %}
-			{% endif %}	
-			
+			{% endif %}
+
 			<h2>Conjunto solución del sistema:</h2> <br>
 
 			<table class="table table-bordered table-sm">
-                      	
+
 				<tr>
 
                       			{% for i in range(0, n) %}
@@ -189,10 +212,10 @@
 					{% endfor %}
 
                          	</tr>
-              		
+
 			</table>
-	
-			
+
+
 			</div>
 			</div>
 
@@ -200,7 +223,7 @@
 		{% endblock %}
 
 		</div>
-		
+
 		<script>
 
 			function ayuda() {
@@ -213,4 +236,3 @@
 
 	</body>
 </html>
-

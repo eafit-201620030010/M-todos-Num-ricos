@@ -1,9 +1,9 @@
-duvan@computer:~/numerico/templates$ cat newton.html 
+duvan@computer:~/numerico/templates$ cat newton.html
 <html>
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -14,19 +14,19 @@ duvan@computer:~/numerico/templates$ cat newton.html
                      }
 
       	</style>
-	
+
 	</head>
 
 	<body>
 
 		<br> <center>
-		
-			<h1 style="color:white;">Ecuaciones de una variable</h1>	
+
+			<h1 style="color:white;">Ecuaciones de una variable</h1>
 			<a href="/" class="btn btn-primary">Inicio</a>
 			<a href="/ecuacionesDeUnaVariable" class="btn btn-primary">Métodos del capítulo</a>
-		
+
 		</center> <br><br>
-			
+
 		<div class="container">
 
 			<form method="POST" action="/raicesMultiples">
@@ -42,9 +42,17 @@ duvan@computer:~/numerico/templates$ cat newton.html
 
 				<div class="col">
 					<a href="">¿Cómo funciona el método?</a>
-                       			<a href="/establecerFuncion?metodo=raicesMultiples">Establecer función</a> 
-                       			<a href="/graficar?metodo=raicesMultiples">Ver gráfica</a> 
+                       			<a href="/establecerFuncion?metodo=raicesMultiples">Establecer función</a>
+                       			<a href="/graficar?metodo=raicesMultiples">Ver gráfica</a>
 				</div>
+				<p>
+					Una raíz múltiple corresponde a un punto donde una función es tangencial al eje x. Cuando la raíz se repite como por ejemplo en x2=0, la raíz x=0 se repite. Gráficamente las raíces múltiples se pueden ver cuando la curva toca en forma tangencial al eje x. Las raíces múltiples se repiten un número par de veces cuando la función no cambia de signo, y un número impar de veces cuando la función cambia de signo.</p>
+					<p>
+					Su estructura es muy similar a la de Newton-Raphson, pero se requiere la segunda derivada y puede operar cuando la derivada es cero, inclusive, la hace más efectiva.
+				</p>
+				<p>
+					En este método partimos de la ecuación que tenemos para Newton-Raphson y nuestra función ya no será f(x)=0 sino que será u(x)=0, siendo u(x)=f(x) / f’(x)
+				</p>
 
 			</div>
 
@@ -67,7 +75,7 @@ duvan@computer:~/numerico/templates$ cat newton.html
                                         <label>Máximo de iteraciones:</label><br>
                                         <input type="text" name="txtMaximoIteraciones">
                                 </div>
-                                
+
 				<div class="col">
                                         <br> <input type="submit" class="btn btn-primary" value="Ejecutar">
                                 </div>
@@ -77,8 +85,8 @@ duvan@computer:~/numerico/templates$ cat newton.html
 			<div class="row">
 
 				<div class="col">
-					<div class="alert alert-danger" role="alert"> Primero debes definir f(x), f'(x) y f''(x). 
-                       			<a href="/establecerFuncion?metodo=raicesMultiples">Establecer funciones</a> 
+					<div class="alert alert-danger" role="alert"> Primero debes definir f(x), f'(x) y f''(x).
+                       			<a href="/establecerFuncion?metodo=raicesMultiples">Establecer funciones</a>
 					<div>
 				</div>
 
@@ -94,10 +102,10 @@ duvan@computer:~/numerico/templates$ cat newton.html
 
 		{% block content %}
 		{% if mensaje %}
-			
+
 			<div class="card">
   			<div class="card-body">
-			
+
 			{% if tipo %}
 
 				<div class="alert alert-success" role="alert"> {{ mensaje }} </div>
@@ -105,11 +113,11 @@ duvan@computer:~/numerico/templates$ cat newton.html
 			{% else %}
 
 				<div class="alert alert-danger" role="alert"> {{ mensaje }} </div>
-			
+
 			{% endif %}
-				
+
 			<table class="table table-bordered table-sm">
-				
+
 				<tr>
 					<td><b>n</b></td>
 					<td><b>Xn</b></td>
@@ -141,7 +149,7 @@ duvan@computer:~/numerico/templates$ cat newton.html
 		</center>
 
 		</div>
-		
+
 		<script>
 
 			function ayuda() {

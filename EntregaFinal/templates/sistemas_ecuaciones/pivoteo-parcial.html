@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,21 +13,21 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 <body>
 
 	<br><center>
-		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>	
+		<h1 style="color:white;">Sistemas de ecuaciones lineales</h1>
 		<a href="/" class="btn btn-primary">Inicio</a>
 		<a href="/sistemasDeEcuaciones" class="btn btn-primary">Métodos del capítulo</a>
 	</center><br><br>
-		
+
 	<div class="container">
 
 			<form method="POST" action="/pivoteoParcial">
-			
+
 			<div class="card">
   			<div class="card-body">
 
@@ -39,38 +39,53 @@
 				<div class="col">
 					<button class="btn btn-link">¿Cómo funciona el método?</button>
 				</div>
-
+				<p>Con el pivoteo parcial se selecciona el mejor pivote entre los candidatos (de la columna), aquel cuyo valor absoluto sea más grande.
+				</p>
+				<p><li>Pasos a seguir:
+				</p>
+				<p>1. Se escribe el sistema de ecuaciones de forma matricial.
+				</p>
+				<p>2. Se selecciona el número mayor en valor absoluto de la columna.
+				</p>
+				<p>3. Se lleva a cabo el proceso de eliminación Gaussiana.
+				</p>
+				<p>4. Se repite el proceso para las siguientes columnas hasta terminar el sistema.
+				</p></li>
+				<li>Ventajas:
+					<p>- No altera ni aumenta la cantidad de operaciones que se realizan para la eliminación.</p>
+					<p>- Se reduce la propagación de error al haber menor unidad de cambio entre los números.</p>
+					<p>- Se reduce los errores por redondeo.</p>
+				</li><li>Desventajas:
+					<p>- A pesar de ser mejor que la eliminación Gaussiana simple, hay otro método que ofrece mejores resultados y mayor disminución de propagación de error y redondeo.</p>
+				</li>
 			</div>
 
 			<hr>
 
 			<div class="row">
-				
 				<div class="col">
-					
+
 					<label> Matriz de coeficientes: </label><br>
 					<textarea rows="4" cols="50" name="txtA"></textarea>
 
 				</div>
-				
+
 				<div class="col">
-				
+
 					<label> Vector de términos independientes: </label><br>
 					<input type="text" name="txtB">
-			
+
 					<br><br>
-					
+
 					<input type="checkbox" name="checkEtapas" id="checkEtapas">
     					<label for="checkEtapas">Etapas del proceso</label>
-					
-					<br><br>	
-			
+
+					<br><br>
+
 					<input type="submit" type="button" class="btn btn-primary" value="Ejecutar">
-					
+
 				</div>
-
 			</div>
-
 			</div>
 			</div>
 
@@ -78,21 +93,21 @@
 
 		{% block content %}
 		{% if n %}
-			
+
 			<div class="card">
   			<div class="card-body">
-			
+
 			<!-- IMPORTANTE -->
-			{% if proceso == True %}	
+			{% if proceso == True %}
 			<h2>Etapas del proceso:</h2> <br>
 
 			{% for k in range(0, numEtapas-1) %}
 			<div class="row">
-		
+
 				<div class="col">
 
 					<h3>Etapa {{k+1}}:</h3>
-					
+
 					{% if filaMayorList[k]!=k %}
 						<label>Se produce un intercambio de filas: [F{{ filaMayorList[k] }} <-> F{{ k }}]</label>
 					{% else %}
@@ -103,10 +118,10 @@
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-							
+
 							{% if i==filaMayorList[k] and j==k %}
 								<td bgcolor="#FFFC33"> {{ etapasPrevias[k][i][j] }} </td>
-							{% else %}	
+							{% else %}
 								<td> {{ etapasPrevias[k][i][j] }} </td>
 							{% endif %}
 
@@ -118,7 +133,7 @@
 			</div>
 
 			<div class="row">
-	
+
 				<div class="col">
 
 					<label>Esta es la matriz después del intercambio, los elementos seleccionados se convertirán en 0:</label>
@@ -127,7 +142,7 @@
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							{% if j == k and i > k %}
 								<td bgcolor="#33FF5E"> {{ etapas[k][i][j] }} </td>
 							{% else %}
@@ -156,24 +171,24 @@
 					{% for i in range(0, n) %}
 						<tr>
 						{% for j in range(0, n + 1) %}
-					
+
 							<td> {{ etapas[k+1][i][j] }} </td>
 
 						{% endfor %}
 						</tr>
 					{% endfor %}
 					</table>
-				
+
 				</div>
 
-			</div><hr>	
+			</div><hr>
 			{% endfor %}
-			{% endif %}	
-			
+			{% endif %}
+
 			<h2>Conjunto solución del sistema:</h2> <br>
 
 			<table class="table table-bordered table-sm">
-                      	
+
 				<tr>
 
                       			{% for i in range(0, n) %}
@@ -189,10 +204,10 @@
 					{% endfor %}
 
                          	</tr>
-              		
+
 			</table>
-	
-			
+
+
 			</div>
 			</div>
 

@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,18 +13,18 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 	<body>
 
 		{% block content %}
 		<br><center>
-			<h1 style="color:white;">Interpolación</h1>	
+			<h1 style="color:white;">Interpolación</h1>
 			<a href="/" class="btn btn-primary">Inicio</a>
 			<a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
 		</center><br><br>
-			
+
 		<div class="container">
 
 			<form method="POST" action="/diferenciasDivididas">
@@ -42,9 +42,26 @@
 				</div>
 
 			</div>
-
+			<p>Las diferencias divididas se utilizan para hallar los coeficientes del polinomio de interpolación de
+				Newton. La interpolación se utiliza para hacer una aproximación a la función que pasa por una nube de puntos.</p>
+				<p>
+					<p>Pasos a seguir:</p>
+					<li>Se debe organizar la nube de puntos de menor a mayor en las “x”.</li>
+					<li>El primero coeficiente es la imagen del primer punto, el segundo es la pendiente entre el
+						primer y el segundo punto, el tercero es la diferencia dividida entre la primera pendiente y
+						la pendiente entre el segundo y tercer punto, y así sucesivamente.</li>
+				</p><p>
+					<p>Ventajas:</p>
+					 <li>Se pueden agregar puntos a medida de que van surgiendo y no afectan los coeficientes
+						 anteriormente calculados.</li>
+					 <li>El programa es útil y de fácil implementación.</li>
+				 </p><p>
+					<p>Desventajas:</p>
+						<li>La función de aproximación no es la más precisa ni suave.</li>
+						<li>Hay métodos mejores y más exactos de interpolación.</li>
+					</p>
 			<hr>
-                       
+
 			<div class="row">
 
                                 <div class="col">
@@ -77,12 +94,12 @@
 		<center>
 
 		{% if yEval %}
-			
+
 		<div class="card">
   		<div class="card-body">
-					
-		<label>Valores X: {{x}}</label><br>	
-		<label>Valores Y: {{y}}</label>	
+
+		<label>Valores X: {{x}}</label><br>
+		<label>Valores Y: {{y}}</label>
 
 		<div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el polinomio interpolante de Newton es igual a {{ yEval }}. </div>
 
@@ -101,4 +118,3 @@
 
 	</body>
 </html>
-

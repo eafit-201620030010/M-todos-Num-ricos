@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,18 +13,18 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 	<body>
 
 		{% block content %}
 		<br><center>
-			<h1 style="color:white;">Interpolación</h1>	
+			<h1 style="color:white;">Interpolación</h1>
 			<a href="/" class="btn btn-primary">Inicio</a>
 			<a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
 		</center><br><br>
-			
+
 		<div class="container">
 
 			<form method="POST" action="/lagrange">
@@ -42,9 +42,19 @@
 				</div>
 
 			</div>
-
+			<p>
+				<p>En el método de interpolación de Lagrange, se da un conjunto de n + 1 puntos conocidos.</p>
+				<p>{(x0,f(x0)), (x1, f(x1)), (x2, f(x2)), …, (xk, f(xk)), …, (xn, f(xn))}</p>
+				<p>donde las abscisas son distintas dos a dos, se procura conseguir un polinomio p(x) del menor grado
+					posible tal que p(xi) = f(xi) para todo i = 0, 1, 2, 3, …, n.</p>
+				<p>Además se puede ver como una composición entre los valores de f(xi) como se puede ver en la siguiente forma:</p>
+				<p> p(x)=α0 f(x0)  +α1 f(x1)+α2 f(x2)+...+αn f(xn)</p>
+				<p>Se quiere que este polinomio pase pase por los puntos dados, por lo cual al evaluar xi en el polinomio, el valor αi debe
+				ser igual a 1, y los demás coeficientes αj con j ≠ i, donde deben ser iguales a 0. De esta manera se está garantizando que
+				p(xi) = f(xi) donde se abarca todo i = 0, 1, 2, 3, …, n</p>
+			</p>
 			<hr>
-                       
+
 			<div class="row">
 
                                 <div class="col">
@@ -77,12 +87,12 @@
 		<center>
 
 		{% if yEval %}
-			
+
 		<div class="card">
   		<div class="card-body">
-					
-		<label>Valores X: {{x}}</label><br>	
-		<label>Valores Y: {{y}}</label>	
+
+		<label>Valores X: {{x}}</label><br>
+		<label>Valores Y: {{y}}</label>
 
 		<div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el polinomio interpolante de Lagrange es igual a {{ yEval }}. </div>
 

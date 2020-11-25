@@ -2,7 +2,7 @@
 	<head>
 		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+
 
 	<style>
         	body {
@@ -13,18 +13,18 @@
                      }
 
       	</style>
-	
+
 	</head>
 
 	<body>
 
 		{% block content %}
 		<br><center>
-			<h1 style="color:white;">Interpolación</h1>	
+			<h1 style="color:white;">Interpolación</h1>
 			<a href="/" class="btn btn-primary">Inicio</a>
 			<a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
 		</center><br><br>
-			
+
 		<div class="container">
 
 			<form method="POST" action="/splineCuadratico">
@@ -42,9 +42,23 @@
 				</div>
 
 			</div>
+			<p>
+				<p>En este caso, los polinomios P(x) a través de los que construimos el Spline tienen grado 2. </p>
+				<p>Esto quiere decir, que va a tener la forma P(x) = ax² + bx + c</p>
+				<p>Como en la interpolación segmentaria lineal, vamos a tener N-1 ecuaciones (donde N son los puntos
+					sobre los que se define la función). La interpolación cuadrática nos va a asegurar que la función
+					que nosotros generemos a trozos con los distintos P(x) va a ser continua, ya que para sacar las
+					condiciones que ajusten el polinomio, vamos a determinar como condiciones:</p>
+					<p>
+					<li>Que las partes de la función a trozos P(x) pasen por ese punto. Es decir, que las dos Pn(x) que rodean al f(x) que queremos aproximar, sean igual a f(x) en cada uno de estos puntos.</li>
+					<li>Que la derivada en un punto siempre coincida para ambos "lados" de la función definida a trozos que pasa por tal punto común.</li>
+					<li>Esto sin embargo no es suficiente, y necesitamos una condición más. ¿Por qué?. Tenemos 3 incógnitas por cada P(x). En un caso sencillo con f(x) definida en tres puntos y dos ecuaciones P(x) para aproximarla, vamos a tener seis incógnitas en total. Para resolver esto necesitaríamos seis ecuaciones, pero vamos a tener tan sólo cinco: cuatro que igualan el P(x) con el valor de f(x) en ese punto (dos por cada intervalo), y la quinta al igualar la derivada en el punto común a las dos P(x).</li>
+				</p>
+				<p>Se necesita una sexta ecuación,¿de dónde se extrae? Esto suele hacerse con el valor de la derivada en algún punto, al que se fuerza uno de los P(x).</p>
+			</p>
 
 			<hr>
-                       
+
 			<div class="row">
 
                                 <div class="col">
@@ -77,12 +91,12 @@
 		<center>
 
 		{% if yEval %}
-			
+
 		<div class="card">
   		<div class="card-body">
-					
-		<label>Valores X: {{x}}</label><br>	
-		<label>Valores Y: {{y}}</label>	
+
+		<label>Valores X: {{x}}</label><br>
+		<label>Valores Y: {{y}}</label>
 
 		<div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el spline cuadrático es igual a {{ yEval }}. </div>
 
