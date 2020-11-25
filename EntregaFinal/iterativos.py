@@ -176,7 +176,7 @@ def SORMatricial(matriz, vector, x0, tol, nMax, w):
 	array = np.zeros((dimension,dimension + 1))
 	array[:,:-1] = matriz
 	array[:,-1:] = vector
-	print(tabulate(array))
+	#print(tabulate(array))
 
 	numpySol = solNumpy(array)
 
@@ -186,13 +186,13 @@ def SORMatricial(matriz, vector, x0, tol, nMax, w):
 	U = -np.triu(matriz,+1)
 	Tw = np.dot(np.linalg.inv(D - w*L),((1-w)*D + w*U))
 	print('---Tw---')
-	print(tabulate(Tw, floatfmt='.8f'))
+	#print(tabulate(Tw, floatfmt='.8f'))
 	radioS = np.amax(abs(np.linalg.eigvals(Tw)))
 	print('Radio espectral: ' + str(radioS))
 
 	Cw = w * np.dot((np.linalg.inv(D - w*L)),vector)
 	print('---Cw---')
-	print(tabulate(Cw, floatfmt='.8f'))
+	#print(tabulate(Cw, floatfmt='.8f'))
 
 	tabla = []
 	fila = []
@@ -205,7 +205,7 @@ def SORMatricial(matriz, vector, x0, tol, nMax, w):
 		errorAbs = abs(np.linalg.norm(table[n][1])-np.linalg.norm(table[n-1][1]))
 		table[n].append(errorAbs)
 		if errorAbs < tol: break
-	print(tabulate(table, headers=['i','b','E'], floatfmt=['i','.8f','.1E']))
+	#print(tabulate(table, headers=['i','b','E'], floatfmt=['i','.8f','.1E']))
 
 	mensaje = ['La solución al sistema es: ' + str(numpySol) + " con tolerancia: "+str(tol), True]
 	print(mensaje) 

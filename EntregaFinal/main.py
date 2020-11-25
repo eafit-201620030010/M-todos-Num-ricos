@@ -622,8 +622,8 @@ def jacobiRelajadoWeb():
 def sorWeb():
 	
 	if request.method == 'POST':
-	
-		"""matriz = request.form["txtA"].split("\n")
+		
+		matriz = request.form["txtA"].split("\n")
 		b = request.form["txtB"].split(",")
 		xInicial = request.form["txtX0"].split(",")
 		w = float(request.form["txtW"])
@@ -645,8 +645,14 @@ def sorWeb():
 			for j in range(len(B[0])): B[i][j] = float(B[i][j])
 		
 
-		for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])"""
+		for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])
 
+
+		A = np.array(A,dtype=np.float64)
+		B = np.array(B,dtype=np.float64)
+		print(B)
+		xInicial = np.array(xInicial,dtype=np.float64)
+		"""
 		#Para pruebas:
 		A = np.array([[4,-1,0,3],[1,15.5,3,8],[0,-1.3,-4,1.1], [14,5,-2,30]],dtype=np.float64)
 		B = np.array([[1],[1],[1],[1]],dtype=np.float64)
@@ -654,21 +660,41 @@ def sorWeb():
 		xInicial = np.array([[0],[0],[0],[0]],dtype=np.float64)
 		tolerancia = 1e-7
 		maximoIteraciones = 100
-		w = 1.5
-
+		w = 1.5"""
+	
+		
 		resultado = SORMatricial(A, B, xInicial, tolerancia, maximoIteraciones, w)
+		print("*************************Imprimir tabla Original*************************")
+		for fila in resultado[0]:
+			print(fila)
+		print("**************************************************************************")
 		print("*************************Imprimir tabla desde web*************************")
 		contF = 0
 		tempVect = []
 		for fila in resultado[0]:
 
 			print(contF)
+			#tempVect.append(fila[1])
 			for element in fila[1]:
-				tempVect.append(element[0])
+				#print("elemento")
+				#print(element)
+				tempVect.append(element[0]) #Esta linea funciona bien con la prueba pero no en la web
+				#tempVect.append(element)
+				#print(element[0])
 			fila[1] = tempVect
-			print(tempVect)
+			#print(tempVect)
 			contF += 1
-			tempVect = []
+			tempVect = [] 
+		"""
+		tempVect = []
+		tempList = []
+		for fila in resultado[0]:
+			for element in fila[1]:
+				tempList = element.tolist()
+				print(tempList)
+				tempVect.append(tempList[0])
+			print(tempVect)"""
+
 		
 		print("******************************************************************************")
 		print("*************************Imprimir tabla desde web buena*************************")
