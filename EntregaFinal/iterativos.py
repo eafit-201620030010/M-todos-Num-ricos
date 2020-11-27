@@ -79,8 +79,7 @@ def checkDet(array):
 	if det == 0: raise Exception('La determinante de la matriz debe ser diferente a cero')
 	tol = 10e-4
 	if abs(det) < tol:
-		option = getOption('La determinante es menor a ' + str(tol) 
-			+ ' y puede presentar problemas de evaluación ¿Desea continuar? si[s] no[n]',['s','n'])
+		option = getOption('La determinante es menor a ' + str(tol) + ' y puede presentar problemas de evaluación ¿Desea continuar? si[s] no[n]',['s','n'])
 		if option == 'n': raise Exception('Operación abortada por el usuario')
 
 # ---------------------------------------------------------------

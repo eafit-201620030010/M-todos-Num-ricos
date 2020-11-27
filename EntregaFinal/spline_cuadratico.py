@@ -121,21 +121,20 @@ def spline_cuadratico(X,Y):
     """
 
     solucion = np.linalg.solve(matriz, matrizy)
-
     ecuaciones = []
     for x in range(0,len(solucion),3):
         ecuacion = ""
-        ecuacion = ecuacion +str(solucion[x])+"(X^2) "
+        ecuacion = ecuacion +str(round(solucion[x], 2))+"(X^2) "
 
         if solucion[x+1] < 0:
-            ecuacion = ecuacion + str(solucion[x+1]) + "X "
+            ecuacion = ecuacion + str(round(solucion[x+1], 2)) + "X "
         else:
-            ecuacion = ecuacion +"+"+str(solucion[x+1]) + "X "
+            ecuacion = ecuacion +"+"+str(round(solucion[x+1], 2)) + "X "
 
         if solucion[x+2] < 0:
-            ecuacion = ecuacion + str(solucion[x+2])
+            ecuacion = ecuacion + str(round(solucion[x+2],2))
         else:
-            ecuacion = ecuacion +"+"+str(solucion[x+2])
+            ecuacion = ecuacion +"+"+str(round(solucion[x+2],2))
 
         ecuaciones.append(ecuacion)
 
@@ -151,7 +150,7 @@ def evaluar_cuadratico(X,X2,X_eval):
         if X[i] <= X_eval and X_eval <= X[i+1]:
             G = ( X2[j] ) * ( X_eval**2 ) + ( X2[j+1] ) * X_eval + (X2[j+2])
         j = j+3
-    return G
+    return round(G,6)
 
 #Recibe un vector de Xs y uno de Ys de los puntos a interpolar, y un valor de X a evaluar
 #Retorna el valor de F de X a evaluar y una lista de strings con los polinomios

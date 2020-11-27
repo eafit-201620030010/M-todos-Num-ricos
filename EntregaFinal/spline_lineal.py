@@ -9,9 +9,11 @@ def spline_lineal(X,Y):
 
     for i in range(len(X)-1):
         m = ( Y[i+1] - Y[i] ) / ( X[i+1] - X[i] )
+        m = round(m, 2)
         pendientes.append(m)
         
         corte = (m*(-X[i+1])) + Y[i+1]
+        corte = round(corte, 2)
         ecuacion = str(m)+"X "
         if corte < 0 :
             ecuacion = ecuacion + str(corte)
@@ -45,6 +47,6 @@ def mainLineal(xs, ys, valor_evaluar):
         print(x)
 
     #imprimir el valor de F de X a evaluar
-    print("> Al evaluar",valor_evaluar, "se obtiene:", evaluacion)
+    print("> Al evaluar",valor_evaluar, "se obtiene:", str(evaluacion))
 
     return evaluacion, ecuaciones
