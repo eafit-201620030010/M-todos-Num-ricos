@@ -88,7 +88,7 @@ def biseccion(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
         #fxMedio = f(xMedio)
         fxMedio = parser.parse(f).evaluate({"x": xMedio})
 
-        tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, 0]) #
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,xInferior), '{1:>10.10f}'.format(1,xSuperior), '{1:>10.10f}'.format(1,xMedio), '{1:>10.10f}'.format(1,fxMedio), 0]) #
 
         error = tolerancia + 1
 
@@ -113,7 +113,7 @@ def biseccion(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
             error = abs(xMedio - auxiliar)
             contadorIteraciones += 1
 
-            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, "{:.1e}".format(error)]) #
+            tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,xInferior), '{1:>10.10f}'.format(1,xSuperior), '{1:>10.10f}'.format(1,xMedio), '{1:>10.10f}'.format(1,fxMedio), "{:.1e}".format(error)]) #
         
         if fxMedio == 0:
 
@@ -160,7 +160,7 @@ def reglaFalsa(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
         #fxMedio = f(xMedio)
         fxMedio = parser.parse(f).evaluate({"x": xMedio})
 
-        tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, 0]) #
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,xInferior), '{1:>10.10f}'.format(1,xSuperior), '{1:>10.10f}'.format(1,xMedio), '{1:>10.10f}'.format(1,fxMedio), 0]) #
         
         error = tolerancia + 1
 
@@ -186,7 +186,7 @@ def reglaFalsa(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
 
             contadorIteraciones += 1
             
-            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, "{:.1e}".format(error)]) #
+            tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,xInferior), '{1:>10.10f}'.format(1,xSuperior), '{1:>10.10f}'.format(1,xMedio), '{1:>10.10f}'.format(1,fxMedio), "{:.1e}".format(error)]) #
 
         if fxMedio == 0:
 

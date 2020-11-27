@@ -15,7 +15,7 @@ def puntoFijo(x, tolerancia, maximoIteraciones, f, g):
     contadorIteraciones = 0
     error = tolerancia + 1
 
-    tabla.append([contadorIteraciones, x,fx, 0]) #
+    tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x),'{1:>10.10f}'.format(1,fx), 0]) #
 
     while error > tolerancia and contadorIteraciones < maximoIteraciones and fx != 0:
        
@@ -30,7 +30,7 @@ def puntoFijo(x, tolerancia, maximoIteraciones, f, g):
 
         contadorIteraciones += 1
 
-        tabla.append([contadorIteraciones, x, fx, "{:.1e}".format(error)]) #
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), "{:.1e}".format(error)]) #
     
     if fx == 0: 
         
@@ -60,7 +60,7 @@ def newton(x, tolerancia, maximoIteraciones, f, df):
     contadorIteraciones = 0
     error = tolerancia + 1
 
-    tabla.append([contadorIteraciones, x, fx, derivada, 0]) #
+    tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), 0]) #
     
     while error > tolerancia and contadorIteraciones < maximoIteraciones and fx != 0 and derivada != 0:
        
@@ -76,7 +76,7 @@ def newton(x, tolerancia, maximoIteraciones, f, df):
 
         contadorIteraciones += 1
         
-        tabla.append([contadorIteraciones, x, fx, derivada, "{:.1e}".format(error)]) #
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), "{:.1e}".format(error)]) #
 
     if fx == 0: 
         
@@ -119,8 +119,8 @@ def secante(x, xNuevo, tolerancia, maximoIteraciones, f):
 
         denominador = fxNuevo - fx
 
-        tabla.append([contadorIteraciones, x, fx, 0])
-        tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, 0])
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), 0])
+        tabla.append([contadorIteraciones + 1, '{1:>10.10f}'.format(1,xNuevo), '{1:>10.10f}'.format(1,fxNuevo), 0])
         
         while error > tolerancia and fxNuevo != 0 and denominador != 0 and contadorIteraciones < maximoIteraciones:
 
@@ -139,7 +139,7 @@ def secante(x, xNuevo, tolerancia, maximoIteraciones, f):
 
             contadorIteraciones += 1
 
-            tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, "{:.1e}".format(error)])
+            tabla.append([contadorIteraciones + 1, '{1:>10.10f}'.format(1,xNuevo), '{1:>10.10f}'.format(1,fxNuevo), "{:.1e}".format(error)])
         
         if fxNuevo == 0: 
             
@@ -175,7 +175,7 @@ def raicesMultiples(x, tolerancia, maximoIteraciones, f, df, ddf):
     contadorIteraciones = 0
     error = tolerancia + 1
 
-    tabla.append([contadorIteraciones, x, fx, fdx, fddx, 0])
+    tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,fdx), '{1:>10.10f}'.format(1,fddx), 0])
 
     while error > tolerancia and contadorIteraciones < maximoIteraciones and fx != 0 and fdx != 0:
 
@@ -194,7 +194,7 @@ def raicesMultiples(x, tolerancia, maximoIteraciones, f, df, ddf):
 
         contadorIteraciones += 1
 
-        tabla.append([contadorIteraciones, x, fx, fdx, fddx, "{:.1e}".format(error)])
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,fdx), '{1:>10.10f}'.format(1,fddx), "{:.1e}".format(error)])
 
     if fx == 0: 
 
