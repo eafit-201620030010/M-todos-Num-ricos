@@ -30,7 +30,7 @@ def puntoFijo(x, tolerancia, maximoIteraciones, f, g):
 
         contadorIteraciones += 1
 
-        tabla.append([contadorIteraciones, x, fx, error]) #
+        tabla.append([contadorIteraciones, x, fx, "{:.1e}".format(error)]) #
     
     if fx == 0: 
         
@@ -76,7 +76,7 @@ def newton(x, tolerancia, maximoIteraciones, f, df):
 
         contadorIteraciones += 1
         
-        tabla.append([contadorIteraciones, x, fx, derivada, error]) #
+        tabla.append([contadorIteraciones, x, fx, derivada, "{:.1e}".format(error)]) #
 
     if fx == 0: 
         
@@ -139,7 +139,7 @@ def secante(x, xNuevo, tolerancia, maximoIteraciones, f):
 
             contadorIteraciones += 1
 
-            tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, error])
+            tabla.append([contadorIteraciones + 1, xNuevo, fxNuevo, "{:.1e}".format(error)])
         
         if fxNuevo == 0: 
             
@@ -194,7 +194,7 @@ def raicesMultiples(x, tolerancia, maximoIteraciones, f, df, ddf):
 
         contadorIteraciones += 1
 
-        tabla.append([contadorIteraciones, x, fx, fdx, fddx, error])
+        tabla.append([contadorIteraciones, x, fx, fdx, fddx, "{:.1e}".format(error)])
 
     if fx == 0: 
 

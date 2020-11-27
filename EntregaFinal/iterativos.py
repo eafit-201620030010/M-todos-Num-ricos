@@ -203,7 +203,7 @@ def SORMatricial(matriz, vector, x0, tol, nMax, w):
 
 		table[n].append(np.dot(Tw,table[n-1][1])+Cw)
 		errorAbs = abs(np.linalg.norm(table[n][1])-np.linalg.norm(table[n-1][1]))
-		table[n].append(errorAbs)
+		table[n].append("{:.1e}".format(errorAbs))
 		if errorAbs < tol: break
 	#print(tabulate(table, headers=['i','b','E'], floatfmt=['i','.8f','.1E']))
 

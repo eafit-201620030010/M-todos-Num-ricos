@@ -111,10 +111,9 @@ def biseccion(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
             fxMedio = parser.parse(f).evaluate({"x": xMedio})
 
             error = abs(xMedio - auxiliar)
-
             contadorIteraciones += 1
 
-            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, error]) #
+            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, "{:.1e}".format(error)]) #
         
         if fxMedio == 0:
 
@@ -187,7 +186,7 @@ def reglaFalsa(xInferior, xSuperior, tolerancia, maximoIteraciones, f):
 
             contadorIteraciones += 1
             
-            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, error]) #
+            tabla.append([contadorIteraciones, xInferior, xSuperior, xMedio, fxMedio, "{:.1e}".format(error)]) #
 
         if fxMedio == 0:
 
