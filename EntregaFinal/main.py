@@ -418,13 +418,34 @@ def vandermondeWeb():
         
 
         print("---------A-------")
-        #print(A)
+        print(A)
+        matriz = []
+        grado = len(A) - 1
+        for i in A:
+                row = []
+                for j in range(grado,-1,-1):
+                        row.append(i[0]**j)
+                matriz.append(row)
+        matriz = np.array(matriz,dtype=np.float64)
+        det = np.linalg.det(matriz)
+
+        repetidoX = det
+        if (repetidoX == 0):
+
+            print("Elementos repetido en x")
+            print(det)
+            return render_template(
+            '/sistemas_ecuaciones/vandermonde.html',
+            repetidoX = False,
+            form = True
+            )
         result = vandermonde(A)
         
         print("-------------------------------------------------------")
         print(result)
         
         r = result[3]
+        
         
         #print('----r1-----')
         #print(r[1])
@@ -433,7 +454,7 @@ def vandermondeWeb():
         print('----poli-----')
         #print(r)
         p = r
-        return render_template("/sistemas_ecuaciones/vandermonde.html", matrizA=result[0],vector=result[1],coef=result[2], poli=p, numFilas=len(result[0]))
+        return render_template("/sistemas_ecuaciones/vandermonde.html", repetidoX = True, form = True, matrizA=result[0],vector=result[1],coef=result[2], poli=p, numFilas=len(result[0]))
 
     else:
 
@@ -718,33 +739,56 @@ def sorWeb():
 @app.route("/diferenciasDivididasNewton", methods=["POST", "GET"])
 def newtonDiferenciasDivididasWeb():
 
-	if request.method == 'POST':
+    if request.method == 'POST':
 
-		xEval = float(request.form["txtXEval"])
-		x = request.form["txtX"].split(",")
-		y = request.form["txtY"].split(",")
+        xEval = float(request.form['txtXEval'])
+        x = request.form['txtX'].split(',')
+        y = request.form['txtY'].split(',')
 
-		for i in range(len(x)): x[i] = float(x[i])
-		for i in range(len(y)): y[i] = float(y[i])
-		puntos = []
-		
-		for i in range(len(x)):
-			punto = []
-			punto.append(x[i])
-			punto.append(y[i])
-			puntos.append(punto)
-		
-		polinomios = newtonDD(puntos)
-		polExp = polinomios[0]
-		polSim = polinomios[1]
-		b = calcularB(x, y)
-		yEval = p(xEval, b, x)
-		
-		return render_template("/interpolacion/diferencias_divididas_newton.html", b=b, polExp = polExp, polSim = polSim, xEval=xEval, yEval=yEval, x=x, y=y, n=len(x)-1)
+        for i in range(len(x)):
+            x[i] = float(x[i])
+        for i in range(len(y)):
+            y[i] = float(y[i])
+        puntos = []
 
-	else:
-		
-		return render_template("/interpolacion/diferencias_divididas_newton.html")
+        for i in range(len(x)):
+            punto = []
+            punto.append(x[i])
+            punto.append(y[i])
+            puntos.append(punto)
+
+        repetidoX = len(x) != len(set(x))
+        if (repetidoX):
+
+            print("Elementos repetido en x")
+            print(x)
+            return render_template(
+            '/interpolacion/diferencias_divididas_newton.html',
+            repetidoX = False,
+            form = True
+            )
+        polinomios = newtonDD(puntos)
+        polExp = polinomios[0]
+        polSim = polinomios[1]
+        b = calcularB(x, y)
+        yEval = p(xEval, b, x)
+
+        return render_template(
+            '/interpolacion/diferencias_divididas_newton.html',
+            b=b,
+            polExp=polExp,
+            polSim=polSim,
+            xEval=xEval,
+            yEval=yEval,
+            x=x,
+            y=y,
+            n=len(x) - 1,
+            repetidoX = True,
+            form = True
+            )
+    else:
+
+        return render_template('/interpolacion/diferencias_divididas_newton.html')
 
 @app.route("/lagrange", methods=["POST", "GET"])
 def lagrangeWeb():

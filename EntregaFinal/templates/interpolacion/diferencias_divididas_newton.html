@@ -93,7 +93,7 @@
 
 		<center>
 
-		{% if yEval %}
+		{% if repetidoX %}
 
 		<div class="card">
   		<div class="card-body">
@@ -116,9 +116,13 @@
 		</div>
 		</div>
 
-		{% endif %}
-		{% endblock %}
 
+                {% else %}
+                {% if form %}
+                <div class="alert alert-danger" role="alert"> El vector x tiene elemetos repetidos</div>
+                {% endif %}
+                {% endif %}
+	        {% endblock %}
 		</center>
 
 		</div>

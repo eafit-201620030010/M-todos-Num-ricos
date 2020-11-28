@@ -82,7 +82,7 @@
       </form>
       <div class="card">
         <div class="card-body">
-
+          {% if repetidoX  %}
           <h2>Matriz A</h2>
 
           <!-- For loop logic of jinja template -->
@@ -97,6 +97,11 @@
           <p>{{poli}}</p>
         </div>
       </div>
+      {% else %}
+      {% if form %}
+      <div class="alert alert-danger" role="alert"> El vector x tiene elemetos repetidos</div>
+      {% endif %}
+      {% endif %}
 
       <script>
 
