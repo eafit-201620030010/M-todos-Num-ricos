@@ -802,7 +802,7 @@ def splineLinealWeb():
             n=len(x) - 1,
             numExpr=len(resultado[1]),
             repetidoX = True,
-            form = False    
+            form = True    
             )
     else:
 
@@ -844,7 +844,7 @@ def splineCuadraticoWeb():
             n=len(x) - 1,
             numExpr=len(resultado[1]),
             repetidoX = True,
-            form = False
+            form = True
             )
     else:
 
@@ -890,6 +890,6 @@ def splineCubicoWeb():
             )
     else:
 
-        return render_template('/interpolacion/spline_cubico.html', form = False)
+        return render_template('/interpolacion/spline_cubico.html')
 
 app.run()

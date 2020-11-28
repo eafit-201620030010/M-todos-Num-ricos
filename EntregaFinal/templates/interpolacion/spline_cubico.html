@@ -1,124 +1,124 @@
 <html>
-	<head>
-		<meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <head>
+    <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-	<style>
-        	body {
-          		background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
-                       	background-repeat: no-repeat;
-                       	background-attachment: fixed;
-                       	background-size: 100% 100%;
-                     }
+    <style>
+      body {
+          background-image: linear-gradient(rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0.5)),url('https://www.medellinherald.com/media/k2/items/cache/62fb5f1024529266c6e71c0c0c9ddb3c_XL.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+      }
 
-      	</style>
+    </style>
 
-	</head>
+  </head>
 
-	<body>
+  <body>
 
-		{% block content %}
-		<br><center>
-			<h1 style="color:white;">Interpolación</h1>
-			<a href="/" class="btn btn-primary">Inicio</a>
-			<a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
-		</center><br><br>
+    {% block content %}
+    <br><center>
+      <h1 style="color:white;">Interpolación</h1>
+      <a href="/" class="btn btn-primary">Inicio</a>
+      <a href="/interpolacion" class="btn btn-primary">Métodos del capítulo</a>
+    </center><br><br>
 
-		<div class="container">
+    <div class="container">
 
-			<form method="POST" action="/splineCubico">
+      <form method="POST" action="/splineCubico">
 
-                        <div class="card">
-                        <div class="card-body">
+        <div class="card">
+          <div class="card-body">
 
-			<div class="row">
+	    <div class="row">
 
-				<div class="col">
-					<h3>Spline cúbico.</h3>
-				</div>
-				<div class="col">
-					<a href="">¿Cómo funciona el método?</a>
-				</div>
+	      <div class="col">
+		<h3>Spline cúbico.</h3>
+	      </div>
+	      <div class="col">
+		<a href="">¿Cómo funciona el método?</a>
+	      </div>
 
-			</div>
-			<p>
-				<p>Cada polinomio P(x) a través del que construimos los Splines en [m,n] tiene grado 3. </p>
-				Esto quiere decir, que va a tener la forma P(x) = ax³ + bx² + cx + d
-				<p>
-				<p>En este caso vamos a tener cuatro variables por cada intervalo (a,b,c,d), y una nueva condición para cada punto común a dos intervalos, respecto a la derivada segunda:</p>
-					<li>Que las partes de la función a trozos P(x) pasen por ese punto. Es decir, que las dos Pn(x) que rodean al f(x) que queremos aproximar, sean igual a f(x) en cada uno de estos puntos.</li>
-					<li>Que la derivada en un punto siempre coincida para ambos "lados" de la función definida a trozos que pasa por tal punto común.</li>
-					<li>Que la derivada segunda en un punto siempre coincida para ambos "lados" de la función definida a trozos que pasa por tal punto común.</li></p>
-				<p>Como puede deducirse al compararlo con el caso de splines cuadráticos, ahora no nos va a faltar una sino dos ecuaciones (condiciones) para el número de incógnitas que tenemos.</p>
-				<p>La forma de solucionar esto, determina el carácter de los splines cúbicos. Así, podemos usar:</p>
+	    </div>
+	    <p>
+	    <p>Cada polinomio P(x) a través del que construimos los Splines en [m,n] tiene grado 3. </p>
+	    Esto quiere decir, que va a tener la forma P(x) = ax³ + bx² + cx + d
+	    <p>
+	    <p>En este caso vamos a tener cuatro variables por cada intervalo (a,b,c,d), y una nueva condición para cada punto común a dos intervalos, respecto a la derivada segunda:</p>
+	    <li>Que las partes de la función a trozos P(x) pasen por ese punto. Es decir, que las dos Pn(x) que rodean al f(x) que queremos aproximar, sean igual a f(x) en cada uno de estos puntos.</li>
+	    <li>Que la derivada en un punto siempre coincida para ambos "lados" de la función definida a trozos que pasa por tal punto común.</li>
+	    <li>Que la derivada segunda en un punto siempre coincida para ambos "lados" de la función definida a trozos que pasa por tal punto común.</li></p>
+	    <p>Como puede deducirse al compararlo con el caso de splines cuadráticos, ahora no nos va a faltar una sino dos ecuaciones (condiciones) para el número de incógnitas que tenemos.</p>
+	    <p>La forma de solucionar esto, determina el carácter de los splines cúbicos. Así, podemos usar:</p>
 
-				<li>Splines cúbicos naturales: La forma más típica. La derivada segunda de P se hace 0 para el primer y último punto sobre el que está definido el conjunto de Splines, esto son, los puntos m y n en el intervalo [m,n].</li>
-				<li>Dar los valores de la derivada segunda de m y n de forma "manual", en el conjunto de splines definidos en el intervalo [m,n].</li>
-				<li>Hacer iguales los valores de la derivada segunda de m y n en el conjunto de splines definidos en el intervalo [m,n]</li>
-				<li>Splines cúbicos sujetos: La derivada primera de P debe tener el mismo valor que las derivada primera de la función para el primer y último punto sobre el que está definido el conjunto de Splines, esto son, los puntos m y n en el intervalo [m,n].</li>
-			</p>
-			<hr>
+	    <li>Splines cúbicos naturales: La forma más típica. La derivada segunda de P se hace 0 para el primer y último punto sobre el que está definido el conjunto de Splines, esto son, los puntos m y n en el intervalo [m,n].</li>
+	    <li>Dar los valores de la derivada segunda de m y n de forma "manual", en el conjunto de splines definidos en el intervalo [m,n].</li>
+	    <li>Hacer iguales los valores de la derivada segunda de m y n en el conjunto de splines definidos en el intervalo [m,n]</li>
+	    <li>Splines cúbicos sujetos: La derivada primera de P debe tener el mismo valor que las derivada primera de la función para el primer y último punto sobre el que está definido el conjunto de Splines, esto son, los puntos m y n en el intervalo [m,n].</li>
+	    </p>
+	    <hr>
 
-			<div class="row">
+	    <div class="row">
 
-                                <div class="col">
-                                        <label>Valores X:</label><br>
-                                        <input type="text" name="txtX">
-                                </div>
+              <div class="col">
+                <label>Valores X:</label><br>
+                <input type="text" name="txtX">
+              </div>
 
-                                <div class="col">
-                                        <label>Valores Y:</label><br>
-                                        <input type="text" name="txtY">
-                                </div>
+              <div class="col">
+                <label>Valores Y:</label><br>
+                <input type="text" name="txtY">
+              </div>
 
-                                <div class="col">
-                                        <label>Evaluar en:</label><br>
-                                        <input type="text" name="txtXEval">
-                                </div>
+              <div class="col">
+                <label>Evaluar en:</label><br>
+                <input type="text" name="txtXEval">
+              </div>
 
-				<div class="col">
-					<br> <input type="submit" class="btn btn-primary" value="Ejecutar">
-                                </div>
+	      <div class="col">
+		<br> <input type="submit" class="btn btn-primary" value="Ejecutar">
+              </div>
 
-                        </div>
+            </div>
 
-                        </div>
-                        </div>
+          </div>
+        </div>
 
-                        </form>
-
-
-		<center>
-                {% if repetidoX  %}
-		{% if yEval %}
-
-		<div class="card">
-  		<div class="card-body">
-
-		<label>Valores X: {{x}}</label><br>
-		<label>Valores Y: {{y}}</label>
-
-		<div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el spline cúbico es igual a {{ yEval }}. </div>
-
-		<label>El spline cúbico de grado a lo sumo {{n}} es:</label> <br>
-		{% for i in range(0, numExpr) %}
-		<label> {{expr[i]}} </label><br>
-		{% endfor %}
-		</div>
-		</div>
-                {% endif %}
-                {% else %}
-                {% if form %}
-                <div class="alert alert-danger" role="alert"> El vector x tiene elemetos repetidos</div>
-                {% endif %}
-                {% endif %}
-	        {% endblock %}
+      </form>
 
 
-		</center>
+      <center>
+        {% if repetidoX  %}
 
-		</div>
 
-	</body>
+	<div class="card">
+  	  <div class="card-body">
+
+	    <label>Valores X: {{x}}</label><br>
+	    <label>Valores Y: {{y}}</label>
+
+	    <div class="alert alert-success" role="alert"> p({{xEval}}) evaluado en el spline cúbico es igual a {{ yEval }}. </div>
+
+	    <label>El spline cúbico de grado a lo sumo {{n}} es:</label> <br>
+	    {% for i in range(0, numExpr) %}
+	    <label> {{expr[i]}} </label><br>
+	    {% endfor %}
+	  </div>
+	</div>
+
+        {% else %}
+        {% if form %}
+        <div class="alert alert-danger" role="alert"> El vector x tiene elemetos repetidos</div>
+        {% endif %}
+        {% endif %}
+	{% endblock %}
+
+
+      </center>
+
+    </div>
+
+  </body>
 </html>
