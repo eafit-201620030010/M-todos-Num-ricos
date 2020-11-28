@@ -465,95 +465,216 @@ def vandermondeWeb():
 
 @app.route("/crout", methods=["POST", "GET"])
 def croutWeb():
-	
-	if request.method == 'POST':
 
-		if request.form.get("checkEtapas"): proceso = True
-		else: proceso = False
-		
-		matriz = request.form["txtA"].split("\n")
-		b = request.form["txtB"].split(",")
+    if request.method == 'POST':
 
-		A = [] # Matriz de coeficientes.
+        if request.form.get('checkEtapas'):
+            proceso = True
+        else:
+            proceso = False
 
-		for fila in matriz: A.append(fila.split(","))
-	
-		for i in range(len(A)):
-			for j in range(len(A[0])): A[i][j] = float(A[i][j])
+        matriz = request.form['txtA'].split('\n')
+        b = request.form['txtB'].split(',')
 
-		for i in range(len(b)): b[i] = float(b[i])
+        A = []  # Matriz de coeficientes.
 
-		resultado = factorizacionDirecta(A, len(A), b, "Crout")
+        for fila in matriz:
+            A.append(fila.split(','))
 
-		return render_template("/sistemas_ecuaciones/crout.html", etapas=resultado[0], numEtapas=len(resultado[0]), x=resultado[1], n=len(A),
-				z=resultado[2], Lb=resultado[3], Uz=resultado[4], proceso=proceso)
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                A[i][j] = float(A[i][j])
 
-	else:
-		
-		return render_template("/sistemas_ecuaciones/crout.html")
+        for i in range(len(b)):
+            b[i] = float(b[i])
+        
+        matriz = []
+        grado = len(A) - 1
+        for i in A:
+                row = []
+                for j in range(grado,-1,-1):
+                        row.append(i[0]**j)
+                matriz.append(row)
+        
+        matriz = np.array(matriz,dtype=np.float64)
+        det = np.linalg.det(matriz)
+        print("Determinante")
+        print(det)
+        lista = np.diag(A)
+        repetidoX = False
+        if 0 in lista: # Imprime lo de abajo
+            print("Ceros en la diagonal")
+            repetidoX = True
+        
+        if (det == 0 or repetidoX):
+
+            print("Determinante")
+            print(det)
+            return render_template(
+            '/sistemas_ecuaciones/crout.html',
+            repetidoX = False,
+            form = True
+            )
+        resultado = factorizacionDirecta(A, len(A), b, 'Crout')
+
+        return render_template(
+            '/sistemas_ecuaciones/crout.html',
+            etapas=resultado[0],
+            numEtapas=len(resultado[0]),
+            x=resultado[1],
+            n=len(A),
+            z=resultado[2],
+            Lb=resultado[3],
+            Uz=resultado[4],
+            proceso=proceso,
+            repetidoX = True
+            )
+    else:
+
+        return render_template('/sistemas_ecuaciones/crout.html')
+
 
 @app.route("/doolittle", methods=["POST", "GET"])
 def doolittleWeb():
-	
-	if request.method == 'POST':
-		
-		if request.form.get("checkEtapas"): proceso = True
-		else: proceso = False
 
-		matriz = request.form["txtA"].split("\n")
-		b = request.form["txtB"].split(",")
+    if request.method == 'POST':
 
-		A = [] # Matriz de coeficientes.
+        if request.form.get('checkEtapas'):
+            proceso = True
+        else:
+            proceso = False
 
-		for fila in matriz: A.append(fila.split(","))
-	
-		for i in range(len(A)):
-			for j in range(len(A[0])): A[i][j] = float(A[i][j])
+        matriz = request.form['txtA'].split('\n')
+        b = request.form['txtB'].split(',')
 
-		for i in range(len(b)): b[i] = float(b[i])
+        A = []  # Matriz de coeficientes.
 
-		resultado = factorizacionDirecta(A, len(A), b, "Doolittle")
+        for fila in matriz:
+            A.append(fila.split(','))
 
-		return render_template("/sistemas_ecuaciones/doolittle.html", etapas=resultado[0], numEtapas=len(resultado[0]), x=resultado[1], n=len(A),
-				z=resultado[2], Lb=resultado[3], Uz=resultado[4], proceso=proceso)
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                A[i][j] = float(A[i][j])
 
-	else:
+        for i in range(len(b)):
+            b[i] = float(b[i])
+            
+        
+        matriz = []
+        grado = len(A) - 1
+        for i in A:
+                row = []
+                for j in range(grado,-1,-1):
+                        row.append(i[0]**j)
+                matriz.append(row)
+        
+        matriz = np.array(matriz,dtype=np.float64)
+        det = np.linalg.det(matriz)
+        print("Determinante")
+        print(det)
+        lista = np.diag(A)
+        repetidoX = False
+        if 0 in lista: # Imprime lo de abajo
+            print("Ceros en la diagonal")
+            repetidoX = True
+        
+        if (det == 0 or repetidoX):
 
-		return render_template("/sistemas_ecuaciones/doolittle.html")
+            print("Determinante")
+            print(det)
+            return render_template(
+            '/sistemas_ecuaciones/doolittle.html',
+            repetidoX = False,
+            form = True
+            )
+        resultado = factorizacionDirecta(A, len(A), b, 'Doolittle')
+
+        return render_template(
+            '/sistemas_ecuaciones/doolittle.html',
+            etapas=resultado[0],
+            numEtapas=len(resultado[0]),
+            x=resultado[1],
+            n=len(A),
+            z=resultado[2],
+            Lb=resultado[3],
+            Uz=resultado[4],
+            proceso=proceso,
+            repetidoX=True
+            )
+    else:
+
+        return render_template('/sistemas_ecuaciones/doolittle.html')
 
 @app.route("/cholesky", methods=["POST", "GET"])
 def choleskyWeb():
-	
-	if request.method == 'POST':
-		
-		if request.form.get("checkEtapas"): proceso = True
-		else: proceso = False
-	
-		
-		matriz = request.form["txtA"].split("\n")
 
-		b = request.form["txtB"].split(",")
+    if request.method == 'POST':
 
-		A = [] # Matriz de coeficientes.
+        if request.form.get('checkEtapas'):
+            proceso = True
+        else:
+            proceso = False
 
-		
-		for fila in matriz: A.append(fila.split(","))
-	
-		
-		for i in range(len(A)):
-			for j in range(len(A[0])): A[i][j] = float(A[i][j])
+        matriz = request.form['txtA'].split('\n')
 
-		for i in range(len(b)): b[i] = float(b[i])
+        b = request.form['txtB'].split(',')
 
-		
-		resultado = factorizacionDirecta(A, len(A), b, "Cholesky")
+        A = []  # Matriz de coeficientes.
 
-		return render_template("/sistemas_ecuaciones/cholesky.html", etapas=resultado[0], numEtapas=len(resultado[0]), x=resultado[1], n=len(A),
-				z=resultado[2], Lb=resultado[3], Uz=resultado[4], proceso=proceso)
-	else:
-			
-		return render_template("/sistemas_ecuaciones/cholesky.html")
+        for fila in matriz:
+            A.append(fila.split(','))
 
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                A[i][j] = float(A[i][j])
+
+        for i in range(len(b)):
+            b[i] = float(b[i])
+
+        matriz = []
+        grado = len(A) - 1
+        for i in A:
+                row = []
+                for j in range(grado,-1,-1):
+                        row.append(i[0]**j)
+                matriz.append(row)
+        
+        matriz = np.array(matriz,dtype=np.float64)
+        det = np.linalg.det(matriz)
+        print("Determinante")
+        print(det)
+        lista = np.diag(A)
+        repetidoX = False
+        if 0 in lista: # Imprime lo de abajo
+            print("Ceros en la diagonal")
+            repetidoX = True
+        
+        if (det == 0 or repetidoX):
+
+            print("Determinante")
+            print(det)
+            return render_template(
+            '/sistemas_ecuaciones/cholesky.html',
+            repetidoX = False,
+            form = True
+            )
+        resultado = factorizacionDirecta(A, len(A), b, 'Cholesky')
+
+        return render_template(
+            '/sistemas_ecuaciones/cholesky.html',
+            etapas=resultado[0],
+            numEtapas=len(resultado[0]),
+            x=resultado[1],
+            n=len(A),
+            z=resultado[2],
+            Lb=resultado[3],
+            Uz=resultado[4],
+            proceso=proceso,
+            repetidoX=True
+            )
+    else:
+
+        return render_template('/sistemas_ecuaciones/cholesky.html')
 
 @app.route("/jacobi", methods=["POST", "GET"])
 def jacobiWeb():

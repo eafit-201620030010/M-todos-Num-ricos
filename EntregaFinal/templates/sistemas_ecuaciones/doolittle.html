@@ -93,6 +93,7 @@
 		</form>
 
 	{% block content %}
+        {% if repetidoX %}
 	{% if n %}
 
 		<div class="card">
@@ -309,8 +310,14 @@
 		</div>
 		</div>
 
-	{% endif %}
-	{% endblock %}
+                {% endif %}
+                {% else %}
+                {% if form %}
+                <div class="alert alert-danger" role="alert"> Derminante cero, se intento dividir por cero, error en la diagonal</div>
+                {% endif %}
+                {% endif %}
+
+	        {% endblock %}
 
 	</div>
 
