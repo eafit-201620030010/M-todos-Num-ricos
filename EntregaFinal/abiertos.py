@@ -51,48 +51,51 @@ def puntoFijo(x, tolerancia, maximoIteraciones, f, g):
 def newton(x, tolerancia, maximoIteraciones, f, df):
 
     tabla = [] #
+    try:
+        #fx = f(x)
+        fx = parser.parse(f).evaluate({"x": x})
+        #derivada = fd(x)
+        derivada = parser.parse(df).evaluate({"x": x})
 
-    #fx = f(x)
-    fx = parser.parse(f).evaluate({"x": x})
-    #derivada = fd(x)
-    derivada = parser.parse(df).evaluate({"x": x})
+        contadorIteraciones = 0
+        error = tolerancia + 1
 
-    contadorIteraciones = 0
-    error = tolerancia + 1
-
-    tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), 0]) #
+        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), 0]) #
     
-    while error > tolerancia and contadorIteraciones < maximoIteraciones and fx != 0 and derivada != 0:
+        while error > tolerancia and contadorIteraciones < maximoIteraciones and fx != 0 and derivada != 0:
        
-        xNuevo = x - (fx / derivada)
-        #fx = f(xNuevo)
-        fx = parser.parse(f).evaluate({"x": xNuevo})
-        #derivada = fd(xNuevo)
-        derivada = parser.parse(df).evaluate({"x": xNuevo})
+            xNuevo = x - (fx / derivada)
+            #fx = f(xNuevo)
+            fx = parser.parse(f).evaluate({"x": xNuevo})
+            #derivada = fd(xNuevo)
+            derivada = parser.parse(df).evaluate({"x": xNuevo})
 
-        error = abs(xNuevo - x)
-        
-        x = xNuevo
+            error = abs(xNuevo - x)
+            
+            x = xNuevo
 
-        contadorIteraciones += 1
-        
-        tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), "{:.1e}".format(error)]) #
+            contadorIteraciones += 1
+            
+            tabla.append([contadorIteraciones, '{1:>10.10f}'.format(1,x), '{1:>10.10f}'.format(1,fx), '{1:>10.10f}'.format(1,derivada), "{:.1e}".format(error)]) #
 
-    if fx == 0: 
-        
-        mensaje = [str(x) + " es una raiz.", True] #
+            if fx == 0: 
+                
+                mensaje = [str(x) + " es una raiz.", True] #
+            
+            elif error <= tolerancia: 
+                
+                mensaje = [str(x) + " es una aproximacion con tolerancia " + str(tolerancia), True] #
+            
+            elif derivada == 0: 
+                
+                mensaje = [str(xNuevo) + "es una posible raiz multiple", True] #
+            
+            else: 
+                
+                mensaje = ["Fracaso en " + str(maximoIteraciones) + " iteraciones.", False] #
+    except:
+        mensaje = ["Fracaso del algortimo por error matemático", False]
     
-    elif error <= tolerancia: 
-        
-        mensaje = [str(x) + " es una aproximacion con tolerancia " + str(tolerancia), True] #
-    
-    elif derivada == 0: 
-        
-        mensaje = [str(xNuevo) + "es una posible raiz multiple", True] #
-    
-    else: 
-        
-        mensaje = ["Fracaso en " + str(maximoIteraciones) + " iteraciones.", False] #
     
     return [tabla, mensaje]
 
