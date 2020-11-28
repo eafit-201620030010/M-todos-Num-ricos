@@ -103,7 +103,9 @@
 		</div>
 
 		</form>
-
+                {% if repetidoX %}
+                        <div class="alert alert-danger" role="alert"> Jacobi Error: Ceros en la diagonal de la matriz</div>
+                {% endif %}
 		{% block content %}
 		{% if mensaje %}
 
@@ -146,6 +148,7 @@
 			</div>
 
 		{% endif %}
+                
 		{% endblock %}
 
 	</div>

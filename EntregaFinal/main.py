@@ -557,33 +557,63 @@ def choleskyWeb():
 
 @app.route("/jacobi", methods=["POST", "GET"])
 def jacobiWeb():
-	
-	if request.method == 'POST':
-	
 
-		matriz = request.form["txtA"].split("\n")
-		b = request.form["txtB"].split(",")
-		xInicial = request.form["txtXInicial"].split(",")
-		tolerancia = float(request.form["txtTolerancia"])
-		maximoIteraciones = int(request.form["txtMaximoIteraciones"])
+    if request.method == 'POST':
 
-		A = [] # Matriz de coeficientes.
+        matriz = request.form['txtA'].split('\n')
+        b = request.form['txtB'].split(',')
+        xInicial = request.form['txtXInicial'].split(',')
+        tolerancia = float(request.form['txtTolerancia'])
+        maximoIteraciones = int(request.form['txtMaximoIteraciones'])
 
-		for fila in matriz: A.append(fila.split(","))
-	
-		for i in range(len(A)):
-			for j in range(len(A[0])): A[i][j] = float(A[i][j])
+        A = []  # Matriz de coeficientes.
 
-		for i in range(len(b)): b[i] = float(b[i])
-		for i in range(len(xInicial)): xInicial[i] = float(xInicial[i])
+        for fila in matriz:
+            A.append(fila.split(','))
 
-		resultado = iterativo(xInicial, tolerancia, maximoIteraciones, A, b, "Jacobi")  
-		return render_template("/sistemas_ecuaciones/jacobi.html", tabla=resultado[0], numFilas=len(resultado[0]), numColumnas=len(resultado[0][0]), mensaje=resultado[1][0], tipo=resultado[1][1])
-	
-	else:
-		
-		return render_template("/sistemas_ecuaciones/jacobi.html")
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                A[i][j] = float(A[i][j])
 
+        for i in range(len(b)):
+            b[i] = float(b[i])
+        for i in range(len(xInicial)):
+            xInicial[i] = float(xInicial[i])
+        
+        lista = np.diag(A)
+        repetidoX = False
+        if 0 in lista: # Imprime lo de abajo
+            print("Ceros en la diagonal")
+            repetidoX = True
+        if (repetidoX):
+
+            print("Ceros en la diagonal de la matriz")
+            print(x)
+            return render_template(
+            '/sistemas_ecuaciones/jacobi.html',
+            repetidoX = True,
+            form = True
+            )    
+
+        resultado = iterativo(
+            xInicial,
+            tolerancia,
+            maximoIteraciones,
+            A,
+            b,
+            'Jacobi',
+            )
+        return render_template(
+            '/sistemas_ecuaciones/jacobi.html',
+            tabla=resultado[0],
+            numFilas=len(resultado[0]),
+            numColumnas=len(resultado[0][0]),
+            mensaje=resultado[1][0],
+            tipo=resultado[1][1],
+            )
+    else:
+
+        return render_template('/sistemas_ecuaciones/jacobi.html')
 
 @app.route("/gaussSeidel", methods=["POST", "GET"])
 def gaussSeidelWeb():
