@@ -21,7 +21,7 @@ def valorMatriz(Matriz):
         for j in range(len(Matriz[0])):
 
             fila.append(Matriz[i][j])
-
+        
         nuevaMatriz.append(fila)
 
     return nuevaMatriz
@@ -641,4 +641,66 @@ def sustitution(array):
                 solution.insert(0,variable)
         #solNumpy(array)
         return np.array(solution)
+
+
+
+def gaussianaPivoteoParcial3(AbParam, n):
+
+    etapas = [] 
+    etapasPrevias = []
+    filaMayorList = []
+
+    Ab = valorMatriz(AbParam)
+
+    # Eliminación
+
+    for k in range(n - 1):
+
+        etapasPrevias.append(valorMatriz(Ab))
+        filaMayor = pivoteoParcial3(Ab, k, n)
+        filaMayorList.append(filaMayor)
+        etapas.append(valorMatriz(Ab))
+
+        multiplicadoresDeEtapa = []
+
+        for i in range(k + 1, n):
+
+            multiplicator = Ab[i][k] / Ab[k][k]
+
+            for j in range(k, n + 1):
+
+                Ab[i][j] = Ab[i][j] - ( multiplicator * Ab[k][j] )
+
+
+    etapasPrevias.append(valorMatriz(Ab))
+    etapas.append(valorMatriz(Ab))
+
+    # Sustitución regresiva
+    x = sustitucionRegresiva(Ab)
+
+    return [etapas, x, filaMayorList, etapasPrevias]
+
+
+
+def pivoteoParcial3(Ab, k, n):
+
+    mayor = math.fabs(Ab[k][k])
+    filaMayor = k
+
+    for i in range(k + 1, n):
+
+        if math.fabs(Ab[i][k]) > mayor:
+
+            mayor = Ab[i][k]
+            filaMayor = i
+
+    if mayor == 0:
+
+        print("El sistema no tiene solución única.")
+
+    elif filaMayor != k:
+
+        intercambiarFilas(Ab, k, filaMayor)
+
+    return filaMayor
 

@@ -262,7 +262,7 @@ def pivoteoParcialWeb():
 
 		Ab = matrizAumentada(A, b)    
    
-		resultado = gaussianaPivoteoParcial(Ab, len(A))
+		resultado = gaussianaPivoteoParcial3(Ab, len(A))
 		
 		return render_template("/sistemas_ecuaciones/pivoteo-parcial.html", Ab=Ab, etapas=resultado[0], numEtapas=len(resultado[0]),
 				n=len(A), x=resultado[1], filaMayorList=resultado[2], etapasPrevias=resultado[3], proceso=proceso)
