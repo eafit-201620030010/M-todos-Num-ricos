@@ -39,7 +39,7 @@ def newtonDD(puntos):
 	print()
 	print('---Polinomio simplificado---')
 	expr = simplify(expr)
-	polSim = pretty(expr)
+	polSim = expr
 	print(polSim)
 	print()	
 	return [polExp, polSim]
