@@ -767,62 +767,129 @@ def lagrangeWeb():
 @app.route("/splineLineal", methods=["POST", "GET"])
 def splineLinealWeb():
 
-	if request.method == 'POST':
-		
-		xEval = float(request.form["txtXEval"])
-		x = request.form["txtX"].split(",")
-		y = request.form["txtY"].split(",")
+    if request.method == 'POST':
 
-		for i in range(len(x)): x[i] = float(x[i])
-		for i in range(len(y)): y[i] = float(y[i])
+        xEval = float(request.form['txtXEval'])
+        x = request.form['txtX'].split(',')
+        y = request.form['txtY'].split(',')
 
-		resultado = mainLineal(x, y, xEval)
-	   
-		return render_template("/interpolacion/spline_lineal.html", xEval=xEval, yEval=resultado[0], expr=resultado[1], x=x, y=y, n=len(x)-1, numExpr=len(resultado[1]))
-		
-	else:
-		
-		return render_template("/interpolacion/spline_lineal.html")
+        for i in range(len(x)):
+            x[i] = float(x[i])
+        for i in range(len(y)):
+            y[i] = float(y[i])
+
+        
+        
+        repetidoX = len(x) != len(set(x))
+        if (repetidoX):
+
+            print("Elementos repetido en x")
+            print(x)
+            return render_template(
+            '/interpolacion/spline_lineal.html',
+            repetidoX = False,
+            form = True
+            )
+        resultado = mainLineal(x, y, xEval)
+        
+        return render_template(
+            '/interpolacion/spline_lineal.html',
+            xEval=xEval,
+            yEval=resultado[0],
+            expr=resultado[1],
+            x=x,
+            y=y,
+            n=len(x) - 1,
+            numExpr=len(resultado[1]),
+            repetidoX = True,
+            form = False    
+            )
+    else:
+
+        return render_template('/interpolacion/spline_lineal.html', form = False)
 
 @app.route("/splineCuadratico", methods=["POST", "GET"])
 def splineCuadraticoWeb():
 
-	if request.method == 'POST':
-		
-		xEval = float(request.form["txtXEval"])
-		x = request.form["txtX"].split(",")
-		y = request.form["txtY"].split(",")
+    if request.method == 'POST':
 
-		for i in range(len(x)): x[i] = float(x[i])
-		for i in range(len(y)): y[i] = float(y[i])
-		
-		resultado = mainCuadratico(x, y, xEval)
+        xEval = float(request.form['txtXEval'])
+        x = request.form['txtX'].split(',')
+        y = request.form['txtY'].split(',')
 
-		return render_template("/interpolacion/spline_cuadratico.html", xEval=xEval, yEval=resultado[0], expr=resultado[1], x=x, y=y,
-				n=len(x)-1, numExpr=len(resultado[1]))
-	
-	else:
-		return render_template("/interpolacion/spline_cuadratico.html")
+        for i in range(len(x)):
+            x[i] = float(x[i])
+        for i in range(len(y)):
+            y[i] = float(y[i])
+            
+        repetidoX = len(x) != len(set(x))
+        if (repetidoX):
+
+            print("Elementos repetido en x")
+            print(x)
+            return render_template(
+            '/interpolacion/spline_cuadratico.html',
+            repetidoX = False,
+            form = True
+            )    
+        resultado = mainCuadratico(x, y, xEval)
+
+        return render_template(
+            '/interpolacion/spline_cuadratico.html',
+            xEval=xEval,
+            yEval=resultado[0],
+            expr=resultado[1],
+            x=x,
+            y=y,
+            n=len(x) - 1,
+            numExpr=len(resultado[1]),
+            repetidoX = True,
+            form = False
+            )
+    else:
+
+        return render_template('/interpolacion/spline_cuadratico.html', form=False)
 
 @app.route("/splineCubico", methods=["POST", "GET"])
 def splineCubicoWeb():
 
-	if request.method == 'POST':
-		
-		xEval = float(request.form["txtXEval"])
-		x = request.form["txtX"].split(",")
-		y = request.form["txtY"].split(",")
+    if request.method == 'POST':
 
-		for i in range(len(x)): x[i] = float(x[i])
-		for i in range(len(y)): y[i] = float(y[i])
-		
-		resultado = mainCubico(x, y, xEval)
-		
-		return render_template("/interpolacion/spline_cubico.html", xEval=xEval, yEval=resultado[0], expr=resultado[1], x=x, y=y,
-				n=len(x)-1, numExpr=len(resultado[1]))
+        xEval = float(request.form['txtXEval'])
+        x = request.form['txtX'].split(',')
+        y = request.form['txtY'].split(',')
 
-	else:
-		return render_template("/interpolacion/spline_cubico.html")
+        for i in range(len(x)):
+            x[i] = float(x[i])
+        for i in range(len(y)):
+            y[i] = float(y[i])
 
+        repetidoX = len(x) != len(set(x))
+        if (repetidoX):
+
+            print("Elementos repetido en x")
+            print(x)
+            return render_template(
+            '/interpolacion/spline_cubico.html',
+            repetidoX = False,
+            form = True
+            )
+        resultado = mainCubico(x, y, xEval)
+
+        return render_template(
+            '/interpolacion/spline_cubico.html',
+            xEval=xEval,
+            yEval=resultado[0],
+            expr=resultado[1],
+            x=x,
+            y=y,
+            n=len(x) - 1,
+            numExpr=len(resultado[1]),
+            repetidoX = True,
+            form = False
+            )
+    else:
+
+        return render_template('/interpolacion/spline_cubico.html', form = False)
 
 app.run()
