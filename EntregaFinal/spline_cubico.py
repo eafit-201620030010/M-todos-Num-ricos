@@ -192,6 +192,7 @@ def spline_cubico(X,Y):
 #Retorna el valor de F de X a evaluar
 def evaluar_cubico(X,X2,X_eval):
     j = 0
+    G = 0
     for i in range(len(X)-1):
         a = X[i]
         b = X[i+1]

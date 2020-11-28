@@ -27,15 +27,26 @@ def spline_lineal(X,Y):
 
 #Recive las listas de X y de Y, el valor de X a evaluar y la lista de las pendientes
 #Retorna el valor de F de X a evaluar
-def evaluar_recta(X,Y,X_eval,M):
+
+
+
+def evaluar_recta(
+    X,
+    Y,
+    X_eval,
+    M,
+    ):
     j = 0
-    for i in range(len(X)-1):
+    G = 0.0
+    for i in range(len(X) - 1):
         a = X[i]
-        b = X[i+1]
-        if X[i] <= X_eval and X_eval <= X[i+1]:
-            G = ( M[j] ) * ( X_eval-X[j] ) + ( Y[j] )
-        j = j+1
+        b = X[i + 1]
+        if X[i] <= X_eval and X_eval <= X[i + 1]:
+            G = M[j] * (X_eval - X[j]) + Y[j]
+        j = j + 1
+    
     return G
+
 
 def mainLineal(xs, ys, valor_evaluar):
 
